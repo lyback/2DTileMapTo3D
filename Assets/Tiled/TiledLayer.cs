@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿#define CSV
+using UnityEngine;
 using System;
 using System.IO;
-
 namespace TiledJsonUtility
 {
     [Serializable]

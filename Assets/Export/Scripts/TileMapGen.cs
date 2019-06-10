@@ -15,7 +15,7 @@ public class TileMapGen : MonoBehaviour
     int m_map_W;
     int m_map_H;
     Vector2 m_offset;
-    Vector2Int m_visibleView;
+
     VisiableObj[,] m_visibleObj;
     Dictionary<int, TileMapObjPool> m_poolDic = new Dictionary<int, TileMapObjPool>();
 
@@ -25,7 +25,6 @@ public class TileMapGen : MonoBehaviour
     public void Init(TerrainInfo objRefInfo, int mapSizeW, int mapSizeH, int w, int h, Vector2Int view, Vector2 offset)
     {
         m_objRefInfoAsset = objRefInfo;
-        m_visibleView = view;
         m_offset = offset;
         m_visibleObj = new VisiableObj[view.x, view.y];
 
@@ -52,7 +51,8 @@ public class TileMapGen : MonoBehaviour
             for (int j = 0; j < m_visibleObj.GetLength(1); j++)
             {
                 int _pos_x = start_x + i;
-                int _pos_z = start_z + j;
+                int _pos_z = m_map_H - (start_z + j);//z轴翻转
+                
                 if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
                 {
                     SetVisibleObjNUll(i, j);
@@ -86,28 +86,31 @@ public class TileMapGen : MonoBehaviour
     Vector3 hide_temp = new Vector3(0f, 1000f, 0f);
     void SetVisibleObj(int i, int j, int objIndex, int x, int z, int rotY)
     {
-        var obj = m_visibleObj[i, j];
-        if (obj.obj != null)
-        {
-            if (obj.index == objIndex)
-            {
-                obj.obj.transform.localPosition = pos_temp;
-                obj.obj.transform.localEulerAngles = rot_temp;
-                return;
-            }
-            obj.obj.transform.localPosition = hide_temp;
-            RecycleMapObj(obj.index, obj.obj);
-        }
-        m_visibleObj[i, j].index = objIndex;
-        m_visibleObj[i, j].obj = GetMapObjFromPool(objIndex);
-        obj = m_visibleObj[i, j];
+        var _visibleObj = m_visibleObj[i, j];
+        var _gameObject = _visibleObj.obj;
 
         pos_temp.x = x + m_offset.x;
         pos_temp.z = z + m_offset.y;
-        obj.obj.transform.localPosition = pos_temp;
-        rot_temp = obj.obj.transform.localEulerAngles;
         rot_temp.y = rotY;
-        obj.obj.transform.localEulerAngles = rot_temp;
+
+        if (_gameObject != null)
+        {
+            if (_visibleObj.index == objIndex)
+            {
+                _gameObject.transform.localPosition = pos_temp;
+                _gameObject.transform.localEulerAngles = rot_temp;
+                return;
+            }
+            _gameObject.transform.localPosition = hide_temp;
+            RecycleMapObj(_visibleObj.index, _gameObject);
+        }
+        m_visibleObj[i, j].index = objIndex;
+        m_visibleObj[i, j].obj = GetMapObjFromPool(objIndex);
+        _visibleObj = m_visibleObj[i, j];
+
+        _gameObject = m_visibleObj[i, j].obj;
+        _gameObject.transform.localPosition = pos_temp;
+        _gameObject.transform.localEulerAngles = rot_temp;
     }
     void SetVisibleObjNUll(int i, int j)
     {

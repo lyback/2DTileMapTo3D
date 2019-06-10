@@ -18,4 +18,38 @@ public class TestMove : MonoBehaviour
     {
         gen.MoveTo(transform.position.x, transform.position.z);
     }
+    private void FixedUpdate()
+    {
+#if UNITY_EDITOR
+        Vector3 dirVector3 = transform.position;
+        if (Input.GetKey(KeyCode.W))
+        {
+            dirVector3.z += 1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            dirVector3.z -= 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            dirVector3.x -= 1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            dirVector3.x += 1;
+        }
+        transform.position = dirVector3;
+#else
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Vector2 pos = touch.position;
+                transform.position = pos;
+            }
+        }
+#endif
+
+    }
 }
