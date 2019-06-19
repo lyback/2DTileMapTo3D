@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -10,6 +10,8 @@ public class ExportMap : Editor
 {
     static string m_MapName = "Map_KOW";
     static string TerrainLayerName = "Terrain";
+    static string RemovableItemLayerName = "RemovableItem";
+    static string UnRemovableItemLayerName = "UnRemovableItem";
     static Vector2Int m_MapSpiltSize = new Vector2Int(5, 5);
     [MenuItem("Map/Export")]
     public static void Export()
@@ -45,8 +47,8 @@ public class ExportMap : Editor
             objList[kv.Key] = kv.Value;
         }
         terrainInfo.gameObjectRef = objList.ToList();
-        terrainInfo.MapSize = new Vector2Int(globalGridSizeX,globalGridSizeZ);
-        terrainInfo.SpiltMapSize = new Vector2Int(spiltMap_w,spiltMap_h);
+        terrainInfo.MapSize = new Vector2Int(globalGridSizeX, globalGridSizeZ);
+        terrainInfo.SpiltMapSize = new Vector2Int(spiltMap_w, spiltMap_h);
         UnityEditor.EditorUtility.SetDirty(terrainInfo);
 
         //地形分块数据
@@ -61,25 +63,55 @@ public class ExportMap : Editor
                 {
                     var tile = tiles[j];
                     int objID = tile.Gid;
-                    int rY = 0;//todo
-                    if (tile.IsFlippedDiag&&tile.IsFlippedHorz)
-                    {
-                        rY = 90;
-                    }
-                    else if(tile.IsFlippedDiag&&tile.IsFlippedVert){
-                        rY = -90;
-                    }
-                    else if (tile.IsFlippedVert&&tile.IsFlippedHorz)
-                    {
-                        rY = 180;
-                    }
-                    
+                    int rY = GetRotY(tile);
+
                     var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
                     int _posIndex = tile.Y * globalGridSizeX + tile.X;
+                    int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
+                    if (_index >= 0)
+                    {
+                        var objInfo = _mapinfo.objInfoList[_index];
+                        objInfo.objIndex = objID;
+                        objInfo.objRotY = rY;
+                        _mapinfo.objInfoList[_index] = objInfo;
+                    }
+                    else
+                    {
+                        var objInfo = new TileMapObjInfo();
+                        objInfo.objIndex = objID;
+                        objInfo.objRotY = rY;
+                        _mapinfo.posIndex.Add(_posIndex);
+                        _mapinfo.objInfoList.Add(objInfo);
+                    }
+                    UnityEditor.EditorUtility.SetDirty(_mapinfo);
+                }
+            }
+            else if(layerName == UnRemovableItemLayerName || layerName == RemovableItemLayerName){
+                var tiles = layer.GetTiles();
+                for (int j = 0; j < tiles.Length; j++)
+                {
+                    var tile = tiles[j];
+                    int objID = tile.Gid;
+                    int rY = GetRotY(tile);
 
-                    _mapinfo.posIndex.Add(_posIndex);
-                    _mapinfo.objInfoList.Add(new TileMapObjInfo(objID, rY));
-
+                    var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
+                    int _posIndex = tile.Y * globalGridSizeX + tile.X;
+                    int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
+                    if (_index >= 0)
+                    {
+                        var objInfo = _mapinfo.objInfoList[_index];
+                        objInfo.objIndex = objID;
+                        objInfo.itemRotY = rY;
+                        _mapinfo.objInfoList[_index] = objInfo;
+                    }
+                    else
+                    {
+                        var objInfo = new TileMapObjInfo();
+                        objInfo.objIndex = objID;
+                        objInfo.itemRotY = rY;
+                        _mapinfo.posIndex.Add(_posIndex);
+                        _mapinfo.objInfoList.Add(objInfo);
+                    }
                     UnityEditor.EditorUtility.SetDirty(_mapinfo);
                 }
             }
@@ -108,7 +140,7 @@ public class ExportMap : Editor
             }
             else
             {
-                return 0;
+                return -1;
             }
         });
 
@@ -131,7 +163,7 @@ public class ExportMap : Editor
                             if (tiledTilesetList[i].firstgid > tile.Gid)
                             {
                                 tilesetIndex = i - 1;
-                                texIndex = tile.Gid - tiledTilesetList[i - 1].firstgid;
+                                texIndex = tile.Gid - tiledTilesetList[i - 1].firstgid + 1;
                             }
                             else
                             {
@@ -165,7 +197,22 @@ public class ExportMap : Editor
 
         return newList;
     }
-
+    private static int GetRotY(TiledLayerTile tile)
+    {
+        if (tile.IsFlippedDiag && tile.IsFlippedHorz)
+        {
+            return 90;
+        }
+        else if (tile.IsFlippedDiag && tile.IsFlippedVert)
+        {
+            return -90;
+        }
+        else if (tile.IsFlippedVert && tile.IsFlippedHorz)
+        {
+            return 180;
+        }
+        return 0;
+    }
     static T GetStriptableObject<T>(string path) where T : ScriptableObject
     {
         T asset = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);

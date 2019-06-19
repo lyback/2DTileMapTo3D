@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +8,7 @@ public class TileMapInfo : ScriptableObject
     public int mapIndex;
     public List<int> posIndex;
     public List<TileMapObjInfo> objInfoList;
-
     public Dictionary<int, TileMapObjInfo> mapInfoDic;
-
     public void Init()
     {
 		if (mapInfoDic != null)
@@ -27,10 +25,12 @@ public class TileMapInfo : ScriptableObject
 [System.Serializable]
 public struct TileMapObjInfo
 {
+    //地块ID
     public int objIndex;
+    //地块旋转
     public int objRotY;
-	public TileMapObjInfo(int index, int rot){
-		objIndex = index;
-		objRotY = rot;
-	}
+    //物件ID
+    public int itemIndex;
+    //物件旋转
+    public int itemRotY;
 }
