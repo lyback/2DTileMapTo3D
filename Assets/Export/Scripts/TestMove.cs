@@ -7,6 +7,7 @@ using UnityEditor;
 
 public class TestMove : MonoBehaviour
 {
+    public int moveSpeed = 1;
     public TileMapGen gen;
     public Vector2Int size = new Vector2Int(5, 5);
     void Start()
@@ -24,19 +25,23 @@ public class TestMove : MonoBehaviour
         Vector3 dirVector3 = transform.position;
         if (Input.GetKey(KeyCode.W))
         {
-            dirVector3.z += 1;
+            dirVector3.z += 0.01f*moveSpeed;
+            dirVector3.x += 0.01f*moveSpeed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            dirVector3.z -= 1;
+            dirVector3.z -= 0.01f*moveSpeed;
+            dirVector3.x -= 0.01f*moveSpeed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            dirVector3.x -= 1;
+            dirVector3.z += 0.01f*moveSpeed;
+            dirVector3.x -= 0.01f*moveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            dirVector3.x += 1;
+            dirVector3.z -= 0.01f*moveSpeed;
+            dirVector3.x += 0.01f*moveSpeed;
         }
         transform.position = dirVector3;
 #else

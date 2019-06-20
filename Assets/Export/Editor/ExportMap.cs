@@ -12,7 +12,7 @@ public class ExportMap : Editor
     static string TerrainLayerName = "Terrain";
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
-    static Vector2Int m_MapSpiltSize = new Vector2Int(5, 5);
+    static Vector2Int m_MapSpiltSize = new Vector2Int(30, 30);
     [MenuItem("Map/Export")]
     public static void Export()
     {
@@ -24,8 +24,8 @@ public class ExportMap : Editor
         var globalGridSizeZ = map.height;
 
         //计算map分块大小,创建分块map配置
-        int spiltMap_w = globalGridSizeX / m_MapSpiltSize.x;
-        int spiltMap_h = globalGridSizeZ / m_MapSpiltSize.y;
+        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize.x);
+        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize.y);
         TileMapInfo[,] mapList = new TileMapInfo[m_MapSpiltSize.x, m_MapSpiltSize.y];
         for (int w = 0; w < m_MapSpiltSize.x; w++)
         {
@@ -64,26 +64,35 @@ public class ExportMap : Editor
                     var tile = tiles[j];
                     int objID = tile.Gid;
                     int rY = GetRotY(tile);
+                    if (objID != 0)
+                    {
+                        var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
+                        int _posIndex = tile.Y * globalGridSizeX + tile.X;
+                        // int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
+                        // if (_index >= 0)
+                        // {
+                        //     var objInfo = _mapinfo.objInfoList[_index];
+                        //     objInfo.objIndex = objID;
+                        //     objInfo.objRotY = rY;
+                        //     _mapinfo.objInfoList[_index] = objInfo;
+                        // }
+                        // else
+                        // {
+                        //     var objInfo = new TileMapObjInfo();
+                        //     objInfo.objIndex = objID;
+                        //     objInfo.objRotY = rY;
+                        //     _mapinfo.posIndex.Add(_posIndex);
+                        //     _mapinfo.objInfoList.Add(objInfo);
+                        // }
 
-                    var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
-                    int _posIndex = tile.Y * globalGridSizeX + tile.X;
-                    int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
-                    if (_index >= 0)
-                    {
-                        var objInfo = _mapinfo.objInfoList[_index];
-                        objInfo.objIndex = objID;
-                        objInfo.objRotY = rY;
-                        _mapinfo.objInfoList[_index] = objInfo;
-                    }
-                    else
-                    {
                         var objInfo = new TileMapObjInfo();
                         objInfo.objIndex = objID;
                         objInfo.objRotY = rY;
                         _mapinfo.posIndex.Add(_posIndex);
                         _mapinfo.objInfoList.Add(objInfo);
+
+                        UnityEditor.EditorUtility.SetDirty(_mapinfo);
                     }
-                    UnityEditor.EditorUtility.SetDirty(_mapinfo);
                 }
             }
             else if(layerName == UnRemovableItemLayerName || layerName == RemovableItemLayerName){
@@ -93,26 +102,28 @@ public class ExportMap : Editor
                     var tile = tiles[j];
                     int objID = tile.Gid;
                     int rY = GetRotY(tile);
-
-                    var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
-                    int _posIndex = tile.Y * globalGridSizeX + tile.X;
-                    int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
-                    if (_index >= 0)
+                    if (objID != 0)
                     {
-                        var objInfo = _mapinfo.objInfoList[_index];
-                        objInfo.objIndex = objID;
-                        objInfo.itemRotY = rY;
-                        _mapinfo.objInfoList[_index] = objInfo;
+                        var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
+                        int _posIndex = tile.Y * globalGridSizeX + tile.X;
+                        int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
+                        if (_index >= 0)
+                        {
+                            var objInfo = _mapinfo.objInfoList[_index];
+                            objInfo.objIndex = objID;
+                            objInfo.itemRotY = rY;
+                            _mapinfo.objInfoList[_index] = objInfo;
+                        }
+                        else
+                        {
+                            var objInfo = new TileMapObjInfo();
+                            objInfo.objIndex = objID;
+                            objInfo.itemRotY = rY;
+                            _mapinfo.posIndex.Add(_posIndex);
+                            _mapinfo.objInfoList.Add(objInfo);
+                        }
+                        UnityEditor.EditorUtility.SetDirty(_mapinfo);
                     }
-                    else
-                    {
-                        var objInfo = new TileMapObjInfo();
-                        objInfo.objIndex = objID;
-                        objInfo.itemRotY = rY;
-                        _mapinfo.posIndex.Add(_posIndex);
-                        _mapinfo.objInfoList.Add(objInfo);
-                    }
-                    UnityEditor.EditorUtility.SetDirty(_mapinfo);
                 }
             }
         }
@@ -153,8 +164,8 @@ public class ExportMap : Editor
             {
                 foreach (TiledLayerTile tile in tiles)
                 {
-                    Debug.LogFormat("Tile({0},{1}) = {2} H={3} V={4} D={5}", tile.X, tile.Y, tile.Gid, tile.IsFlippedHorz, tile.IsFlippedVert, tile.IsFlippedDiag);
-                    if (!layerObjDic[layer.name].ContainsKey(tile.Gid))
+                    // Debug.LogFormat("Tile({0},{1}) = {2} H={3} V={4} D={5}", tile.X, tile.Y, tile.Gid, tile.IsFlippedHorz, tile.IsFlippedVert, tile.IsFlippedDiag);
+                    if (tile.Gid != 0 && !layerObjDic[layer.name].ContainsKey(tile.Gid))
                     {
                         int texIndex = 0;
                         int tilesetIndex = 0;

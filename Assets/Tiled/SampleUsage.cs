@@ -18,7 +18,7 @@ public class SampleUsage : MonoBehaviour
                 {
                     foreach (TiledLayerTile tile in tiles)
                     {
-                        Debug.LogFormat("Tile({0},{1}) = {2} H={3} V={4} D={5}", tile.X, tile.Y, tile.Gid, tile.IsFlippedHorz, tile.IsFlippedVert, tile.IsFlippedDiag);
+                        // Debug.LogFormat("Tile({0},{1}) = {2} H={3} V={4} D={5}", tile.X, tile.Y, tile.Gid, tile.IsFlippedHorz, tile.IsFlippedVert, tile.IsFlippedDiag);
                     }
                 }
             }

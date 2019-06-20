@@ -33,7 +33,7 @@ public class TileMapGen : MonoBehaviour
 
         m_tilemap_W = w;
         m_tilemap_H = h;
-        m_tilemapInfo = new TileMapInfo[mapSizeW / w, mapSizeH / h];
+        m_tilemapInfo = new TileMapInfo[Mathf.CeilToInt(mapSizeW*1f / w), Mathf.CeilToInt(mapSizeH*1f / h)];
     }
 
     public void MoveTo(float x, float z)
@@ -46,12 +46,15 @@ public class TileMapGen : MonoBehaviour
         }
         m_lastPos_x = start_x;
         m_lastPos_z = start_z;
-        for (int i = 0; i < m_visibleObj.GetLength(0); i++)
+        int visiable_x_count = m_visibleObj.GetLength(0);
+        int visiable_z_count = m_visibleObj.GetLength(1);
+        for (int i = 0; i < visiable_x_count; i++)
         {
-            for (int j = 0; j < m_visibleObj.GetLength(1); j++)
+            for (int j = 0; j < visiable_z_count; j++)
             {
-                int _pos_x = start_x + i;
-                int _pos_z = m_map_H - (start_z + j);//z轴翻转
+                int _pos_x = m_map_W - (start_x + i - visiable_x_count/2);
+                int _pos_z = m_map_H - (start_z + j - visiable_z_count/2);//z轴翻转
+                // int _pos_z = start_z + j;
                 
                 if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
                 {
