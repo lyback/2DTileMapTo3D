@@ -12,6 +12,7 @@ public class ExportMap : Editor
     static string TerrainLayerName = "Terrain";
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
+    static int SeaID = 204;
     static Vector2Int m_MapSpiltSize = new Vector2Int(30, 30);
     [MenuItem("Map/Export")]
     public static void Export()
@@ -64,7 +65,7 @@ public class ExportMap : Editor
                     var tile = tiles[j];
                     int objID = tile.Gid;
                     int rY = GetRotY(tile);
-                    if (objID != 0)
+                    if (objID != 0 && objID != SeaID)
                     {
                         var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
                         int _posIndex = tile.Y * globalGridSizeX + tile.X;
@@ -102,7 +103,7 @@ public class ExportMap : Editor
                     var tile = tiles[j];
                     int objID = tile.Gid;
                     int rY = GetRotY(tile);
-                    if (objID != 0)
+                    if (objID != 0 && objID != SeaID)
                     {
                         var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
                         int _posIndex = tile.Y * globalGridSizeX + tile.X;
@@ -165,7 +166,7 @@ public class ExportMap : Editor
                 foreach (TiledLayerTile tile in tiles)
                 {
                     // Debug.LogFormat("Tile({0},{1}) = {2} H={3} V={4} D={5}", tile.X, tile.Y, tile.Gid, tile.IsFlippedHorz, tile.IsFlippedVert, tile.IsFlippedDiag);
-                    if (tile.Gid != 0 && !layerObjDic[layer.name].ContainsKey(tile.Gid))
+                    if (tile.Gid != 0 && tile.Gid != SeaID && !layerObjDic[layer.name].ContainsKey(tile.Gid))
                     {
                         int texIndex = 0;
                         int tilesetIndex = 0;

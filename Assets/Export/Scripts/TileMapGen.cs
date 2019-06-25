@@ -22,6 +22,9 @@ public class TileMapGen : MonoBehaviour
     int m_lastPos_x = int.MaxValue;
     int m_lastPos_z = int.MaxValue;
 
+    float cos45 = Mathf.Cos(-45);
+    float sin45 = Mathf.Sin(-45);
+
     public void Init(TerrainInfo objRefInfo, int mapSizeW, int mapSizeH, int w, int h, Vector2Int view, Vector2 offset)
     {
         m_objRefInfoAsset = objRefInfo;
@@ -33,17 +36,17 @@ public class TileMapGen : MonoBehaviour
 
         m_tilemap_W = w;
         m_tilemap_H = h;
-        m_tilemapInfo = new TileMapInfo[Mathf.CeilToInt(mapSizeW*1f / w), Mathf.CeilToInt(mapSizeH*1f / h)];
+        m_tilemapInfo = new TileMapInfo[Mathf.CeilToInt(mapSizeW * 1f / w), Mathf.CeilToInt(mapSizeH * 1f / h)];
     }
 
     public void MoveTo(float x, float z)
     {
         int start_x = Mathf.FloorToInt(x);
         int start_z = Mathf.FloorToInt(z);
-        if (start_x == m_lastPos_x && start_z == m_lastPos_z)
-        {
-            return;
-        }
+        // if (start_x == m_lastPos_x && start_z == m_lastPos_z)
+        // {
+        //     return;
+        // }
         m_lastPos_x = start_x;
         m_lastPos_z = start_z;
         int visiable_x_count = m_visibleObj.GetLength(0);
@@ -52,10 +55,13 @@ public class TileMapGen : MonoBehaviour
         {
             for (int j = 0; j < visiable_z_count; j++)
             {
-                int _pos_x = m_map_W - (start_x + i - visiable_x_count/2);
-                int _pos_z = m_map_H - (start_z + j - visiable_z_count/2);//z轴翻转
+                int _pos_x = m_map_W - (start_x + i);
+                int _pos_z = m_map_H - (start_z + j);
+                int temp = _pos_x;
+                _pos_x = _pos_z;
+                _pos_z = temp;
                 // int _pos_z = start_z + j;
-                
+                // int _pos_x = start_x + i;
                 if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
                 {
                     SetVisibleObjNUll(i, j);
@@ -91,10 +97,11 @@ public class TileMapGen : MonoBehaviour
     {
         var _visibleObj = m_visibleObj[i, j];
         var _gameObject = _visibleObj.obj;
-
+        // float _x = x + m_lastPos_x;
+        // float _z = z + m_lastPos_z;
         pos_temp.x = x + m_offset.x;
         pos_temp.z = z + m_offset.y;
-        rot_temp.y = rotY;
+        rot_temp.y = rotY - 135;
 
         if (_gameObject != null)
         {

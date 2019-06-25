@@ -14,6 +14,7 @@ public class TestMove : MonoBehaviour
     {
         var terrainInfo = AssetDatabase.LoadAssetAtPath<TerrainInfo>(string.Format("Assets/Map/TerrainInfo.asset"));
         gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, new Vector2(-size.x / 2f, -size.y / 2f));
+        // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }
     void Update()
     {
