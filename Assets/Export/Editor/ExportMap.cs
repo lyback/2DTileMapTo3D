@@ -33,12 +33,12 @@ public class ExportMap : Editor
             for (int h = 0; h < m_MapSpiltSize.y; h++)
             {
                 mapList[w, h] = GetStriptableObject<TileMapInfo>(string.Format("Assets/Map/MapInfo_{0}_{1}.asset", w, h));
-                mapList[w, h].mapIndex = h * spiltMap_w + w;
+                // mapList[w, h].mapIndex = h * spiltMap_w + w;
                 mapList[w, h].posIndex = new List<int>();
                 mapList[w, h].objInfoList = new List<TileMapObjInfo>();
             }
         }
-
+        
         //创建地形obj配置
         TerrainInfo terrainInfo = GetStriptableObject<TerrainInfo>("Assets/Map/TerrainInfo.asset");
         var terrainObjDic = layerObjDic[TerrainLayerName];

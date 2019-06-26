@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileMapInfo : ScriptableObject
 {
 
-    public int mapIndex;
+    // public int mapIndex;
     public List<int> posIndex;
     public List<TileMapObjInfo> objInfoList;
     public Dictionary<int, TileMapObjInfo> mapInfoDic;
