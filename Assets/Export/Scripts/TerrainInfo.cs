@@ -7,5 +7,5 @@ public class TerrainInfo : ScriptableObject
 {
     public Vector2Int MapSize;
     public Vector2Int SpiltMapSize;
-    public List<GameObject> gameObjectRef;
+    // public List<GameObject> gameObjectRef;
 }

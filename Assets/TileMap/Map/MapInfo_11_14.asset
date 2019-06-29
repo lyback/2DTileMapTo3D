@@ -1,0 +1,3215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3628005db92d14cbdcf23942d175e2, type: 3}
+  m_Name: MapInfo_11_14
+  m_EditorClassIdentifier: 
+  posIndex: b8420a00b9420a00ba420a00bb420a00bc420a00bd420a00be420a00bf420a00c0420a00c1420a00c2420a00c3420a00c4420a00c5420a00c6420a00c7420a00c8420a00c9420a00ca420a00cb420a00cc420a00cd420a00ce420a00cf420a00d0420a00d1420a00d2420a00d3420a00d4420a00d5420a00d6420a00d7420a00d8420a00d9420a00da420a00db420a00dc420a00dd420a00de420a00df420a0068470a0069470a006a470a006b470a006c470a006d470a006e470a006f470a0070470a0071470a0072470a0073470a0074470a0075470a0076470a0077470a0078470a0079470a007a470a007b470a007c470a007d470a007e470a007f470a0080470a0081470a0082470a0083470a0084470a0085470a0086470a0087470a0088470a0089470a008a470a008b470a008c470a008d470a008e470a008f470a00184c0a00194c0a001a4c0a001b4c0a001c4c0a001d4c0a001e4c0a001f4c0a00204c0a00214c0a00224c0a00234c0a00244c0a00254c0a00264c0a00274c0a00284c0a00294c0a002a4c0a002b4c0a002c4c0a002d4c0a002e4c0a002f4c0a00304c0a00314c0a00324c0a00334c0a00344c0a00354c0a00364c0a00374c0a00384c0a00394c0a003a4c0a003b4c0a003c4c0a003d4c0a003e4c0a003f4c0a00c8500a00c9500a00ca500a00cb500a00cc500a00cd500a00ce500a00cf500a00d0500a00d1500a00d2500a00d3500a00d4500a00d5500a00d6500a00d7500a00d8500a00d9500a00da500a00db500a00dc500a00dd500a00de500a00df500a00e0500a00e1500a00e2500a00e3500a00e4500a00e5500a00e6500a00e7500a00e8500a00e9500a00ea500a00eb500a00ec500a00ed500a00ee500a00ef500a0078550a0079550a007a550a007b550a007c550a007d550a007e550a007f550a0080550a0081550a0082550a0083550a0084550a0085550a0086550a0087550a0088550a0089550a008a550a008b550a008c550a008d550a008e550a008f550a0090550a0091550a0092550a0093550a0094550a0095550a0096550a0097550a0098550a0099550a009a550a009b550a009c550a009d550a009e550a009f550a00285a0a00295a0a002a5a0a002b5a0a002c5a0a002d5a0a002e5a0a002f5a0a00305a0a00315a0a00325a0a00335a0a00345a0a00355a0a00365a0a00375a0a00385a0a00395a0a003a5a0a003b5a0a003c5a0a003d5a0a003e5a0a003f5a0a00405a0a00415a0a00425a0a00435a0a00445a0a00455a0a00465a0a00475a0a00485a0a00495a0a004a5a0a004b5a0a004c5a0a004d5a0a004e5a0a004f5a0a00d85e0a00d95e0a00da5e0a00db5e0a00dc5e0a00dd5e0a00de5e0a00df5e0a00e05e0a00e15e0a00e25e0a00e35e0a00e45e0a00e55e0a00e65e0a00e75e0a00e85e0a00e95e0a00ea5e0a00eb5e0a00ec5e0a00ed5e0a00ee5e0a00ef5e0a00f05e0a00f15e0a00f25e0a00f35e0a00f45e0a00f55e0a00f65e0a00f75e0a00f85e0a00f95e0a00fa5e0a00fb5e0a00fc5e0a00fd5e0a00fe5e0a00ff5e0a0088630a0089630a008a630a008b630a008c630a008d630a008e630a008f630a0090630a0091630a0092630a0093630a0094630a0095630a0096630a0097630a0098630a0099630a009a630a009b630a009c630a009d630a009e630a009f630a00a0630a00a1630a00a2630a00a3630a00a4630a00a5630a00a6630a00a7630a00a8630a00a9630a00aa630a00ab630a00ac630a00ad630a00ae630a00af630a0038680a0039680a003a680a003b680a003c680a003d680a003e680a003f680a0040680a0041680a0042680a0043680a0044680a0045680a0046680a0047680a0048680a0049680a004a680a004b680a004c680a004d680a004e680a004f680a0050680a0051680a0052680a0053680a0054680a0055680a0056680a0057680a0058680a0059680a005a680a005b680a005c680a005d680a005e680a005f680a00e86c0a00e96c0a00ea6c0a00eb6c0a00ec6c0a00ed6c0a00ee6c0a00ef6c0a00f06c0a00f16c0a00f26c0a00f36c0a00f46c0a00f56c0a00f66c0a00f76c0a00f86c0a00f96c0a00fa6c0a00fb6c0a00fc6c0a00fd6c0a00fe6c0a00ff6c0a00006d0a00016d0a00026d0a00036d0a00046d0a00056d0a00066d0a00076d0a00086d0a00096d0a000a6d0a000b6d0a000c6d0a000d6d0a000e6d0a000f6d0a0098710a0099710a009a710a009b710a009c710a009d710a009e710a009f710a00a0710a00a1710a00a2710a00a3710a00a4710a00a5710a00a6710a00a7710a00a8710a00a9710a00aa710a00ab710a00ac710a00ad710a00ae710a00af710a00b0710a00b1710a00b2710a00b3710a00b4710a00b5710a00b6710a00b7710a00b8710a00b9710a00ba710a00bb710a00bc710a00bd710a00be710a00bf710a0048760a0049760a004a760a004b760a004c760a004d760a004e760a004f760a0050760a0051760a0052760a0053760a0054760a0055760a0056760a0057760a0058760a0059760a005a760a005b760a005c760a005d760a005e760a005f760a0060760a0061760a0062760a0063760a0064760a0065760a0066760a0067760a0068760a0069760a006a760a006b760a006c760a006d760a006e760a006f760a00f87a0a00f97a0a00fa7a0a00fb7a0a00fc7a0a00fd7a0a00fe7a0a00ff7a0a00007b0a00017b0a00027b0a00037b0a00047b0a00057b0a00067b0a00077b0a00087b0a00097b0a000a7b0a000b7b0a000c7b0a000d7b0a000e7b0a000f7b0a00107b0a00117b0a00127b0a00137b0a00147b0a00157b0a00167b0a00177b0a00187b0a00197b0a001a7b0a001b7b0a001c7b0a001d7b0a001e7b0a001f7b0a00a87f0a00a97f0a00aa7f0a00ab7f0a00ac7f0a00ad7f0a00ae7f0a00af7f0a00b07f0a00b17f0a00b27f0a00b37f0a00b47f0a00b57f0a00b67f0a00b77f0a00b87f0a00b97f0a00ba7f0a00bb7f0a00bc7f0a00bd7f0a00be7f0a00bf7f0a00c07f0a00c17f0a00c27f0a00c37f0a00c47f0a00c57f0a00c67f0a00c77f0a00c87f0a00c97f0a00ca7f0a00cb7f0a00cc7f0a00cd7f0a00ce7f0a00cf7f0a0058840a0059840a005a840a005b840a005c840a005d840a005e840a005f840a0060840a0061840a0062840a0063840a0064840a0065840a0066840a0067840a0068840a0069840a006a840a006b840a006c840a006d840a006e840a006f840a0070840a0071840a0072840a0073840a0074840a0075840a0076840a0077840a0078840a0079840a007a840a007b840a007c840a007d840a007e840a007f840a0008890a0009890a000a890a000b890a000c890a000d890a000e890a000f890a0010890a0011890a0012890a0013890a0014890a0015890a0016890a0017890a0018890a0019890a001a890a001b890a001c890a001d890a001e890a001f890a0020890a0021890a0022890a0023890a0024890a0025890a0026890a0027890a0028890a0029890a002a890a002b890a002c890a002d890a002e890a002f890a00b88d0a00b98d0a00ba8d0a00bb8d0a00bc8d0a00bd8d0a00be8d0a00bf8d0a00c08d0a00c18d0a00c28d0a00c38d0a00c48d0a00c58d0a00c68d0a00c78d0a00c88d0a00c98d0a00ca8d0a00cb8d0a00cc8d0a00cd8d0a00ce8d0a00cf8d0a00d08d0a00d18d0a00d28d0a00d38d0a00d48d0a00d58d0a00d68d0a00d78d0a00d88d0a00d98d0a00da8d0a00db8d0a00dc8d0a00dd8d0a00de8d0a00df8d0a0068920a0069920a006a920a006b920a006c920a006d920a006e920a006f920a0070920a0071920a0072920a0073920a0074920a0075920a0076920a0077920a0078920a0079920a007a920a007b920a007c920a007d920a007e920a007f920a0080920a0081920a0082920a0083920a0084920a0085920a0086920a0087920a0088920a0089920a008a920a008b920a008c920a008d920a008e920a008f920a0018970a0019970a001a970a001b970a001c970a001d970a001e970a001f970a0020970a0021970a0022970a0023970a0024970a0025970a0026970a0027970a0028970a0029970a002a970a002b970a002c970a002d970a002e970a002f970a0030970a0031970a0032970a0033970a0034970a0035970a0036970a0037970a0038970a0039970a003a970a003b970a003c970a003d970a003e970a003f970a00c89b0a00c99b0a00ca9b0a00cb9b0a00cc9b0a00cd9b0a00ce9b0a00cf9b0a00d09b0a00d19b0a00d29b0a00d39b0a00d49b0a00d59b0a00d69b0a00d79b0a00d89b0a00d99b0a00da9b0a00db9b0a00dc9b0a00dd9b0a00de9b0a00df9b0a00e09b0a00e19b0a00e29b0a00e39b0a00e49b0a00e59b0a00e69b0a00e79b0a00e89b0a00e99b0a00ea9b0a00eb9b0a00ec9b0a00ed9b0a00ee9b0a00ef9b0a0078a00a0079a00a007aa00a007ba00a007ca00a007da00a007ea00a007fa00a0080a00a0081a00a0082a00a0083a00a0084a00a0085a00a0086a00a0087a00a0088a00a0089a00a008aa00a008ba00a008ca00a008da00a008ea00a008fa00a0090a00a0091a00a0092a00a0093a00a0094a00a0095a00a0096a00a0097a00a0098a00a0099a00a009aa00a009ba00a009ca00a009da00a009ea00a009fa00a0028a50a0029a50a002aa50a002ba50a002ca50a002da50a002ea50a002fa50a0030a50a0031a50a0032a50a0033a50a0034a50a0035a50a0036a50a0037a50a0038a50a0039a50a003aa50a003ba50a003ca50a003da50a003ea50a003fa50a0040a50a0041a50a0042a50a0043a50a0044a50a0045a50a0046a50a0047a50a0048a50a0049a50a004aa50a004ba50a004ca50a004da50a004ea50a004fa50a00d8a90a00d9a90a00daa90a00dba90a00dca90a00dda90a00dea90a00dfa90a00e0a90a00e1a90a00e2a90a00e3a90a00e4a90a00e5a90a00e6a90a00e7a90a00e8a90a00e9a90a00eaa90a00eba90a00eca90a00eda90a00eea90a00efa90a00f0a90a00f1a90a00f2a90a00f3a90a00f4a90a00f5a90a00f6a90a00f7a90a00f8a90a00f9a90a00faa90a00fba90a00fca90a00fda90a00fea90a00ffa90a0088ae0a0089ae0a008aae0a008bae0a008cae0a008dae0a008eae0a008fae0a0090ae0a0091ae0a0092ae0a0093ae0a0094ae0a0095ae0a0096ae0a0097ae0a0098ae0a0099ae0a009aae0a009bae0a009cae0a009dae0a009eae0a009fae0a00a0ae0a00a1ae0a00a2ae0a00a3ae0a00a4ae0a00a5ae0a00a6ae0a00a7ae0a00a8ae0a00a9ae0a00aaae0a00abae0a00acae0a00adae0a00aeae0a00afae0a0038b30a0039b30a003ab30a003bb30a003cb30a003db30a003eb30a003fb30a0040b30a0041b30a0042b30a0043b30a0044b30a0045b30a0046b30a0047b30a0048b30a0049b30a004ab30a004bb30a004cb30a004db30a004eb30a004fb30a0050b30a0051b30a0052b30a0053b30a0054b30a0055b30a0056b30a0057b30a0058b30a0059b30a005ab30a005bb30a005cb30a005db30a005eb30a005fb30a00e8b70a00e9b70a00eab70a00ebb70a00ecb70a00edb70a00eeb70a00efb70a00f0b70a00f1b70a00f2b70a00f3b70a00f4b70a00f5b70a00f6b70a00f7b70a00f8b70a00f9b70a00fab70a00fbb70a00fcb70a00fdb70a00feb70a00ffb70a0000b80a0001b80a0002b80a0003b80a0004b80a0005b80a0006b80a0007b80a0008b80a0009b80a000ab80a000bb80a000cb80a000db80a000eb80a000fb80a0098bc0a0099bc0a009abc0a009bbc0a009cbc0a009dbc0a009ebc0a009fbc0a00a0bc0a00a1bc0a00a2bc0a00a3bc0a00a4bc0a00a5bc0a00a6bc0a00a7bc0a00a8bc0a00a9bc0a00aabc0a00abbc0a00acbc0a00adbc0a00aebc0a00afbc0a00b0bc0a00b1bc0a00b2bc0a00b3bc0a00b4bc0a00b5bc0a00b6bc0a00b7bc0a00b8bc0a00b9bc0a00babc0a00bbbc0a00bcbc0a00bdbc0a00bebc0a00bfbc0a0048c10a0049c10a004ac10a004bc10a004cc10a004dc10a004ec10a004fc10a0050c10a0051c10a0052c10a0053c10a0054c10a0055c10a0056c10a0057c10a0058c10a0059c10a005ac10a005bc10a005cc10a005dc10a005ec10a005fc10a0060c10a0061c10a0062c10a0063c10a0064c10a0065c10a0066c10a0067c10a0068c10a0069c10a006ac10a006bc10a006cc10a006dc10a006ec10a006fc10a00f8c50a00f9c50a00fac50a00fbc50a00fcc50a00fdc50a00fec50a00ffc50a0000c60a0001c60a0002c60a0003c60a0004c60a0005c60a0006c60a0007c60a0008c60a0009c60a000ac60a000bc60a000cc60a000dc60a000ec60a000fc60a0010c60a0011c60a0012c60a0013c60a0014c60a0015c60a0016c60a0017c60a0018c60a0019c60a001ac60a001bc60a001cc60a001dc60a001ec60a001fc60a00a8ca0a00a9ca0a00aaca0a00abca0a00acca0a00adca0a00aeca0a00afca0a00b0ca0a00b1ca0a00b2ca0a00b3ca0a00b4ca0a00b5ca0a00b6ca0a00b7ca0a00b8ca0a00b9ca0a00baca0a00bbca0a00bcca0a00bdca0a00beca0a00bfca0a00c0ca0a00c1ca0a00c2ca0a00c3ca0a00c4ca0a00c5ca0a00c6ca0a00c7ca0a00c8ca0a00c9ca0a00caca0a00cbca0a00ccca0a00cdca0a00ceca0a00cfca0a0058cf0a0059cf0a005acf0a005bcf0a005ccf0a005dcf0a005ecf0a005fcf0a0060cf0a0061cf0a0062cf0a0063cf0a0064cf0a0065cf0a0066cf0a0067cf0a0068cf0a0069cf0a006acf0a006bcf0a006ccf0a006dcf0a006ecf0a006fcf0a0070cf0a0071cf0a0072cf0a0073cf0a0074cf0a0075cf0a0076cf0a0077cf0a0078cf0a0079cf0a007acf0a007bcf0a007ccf0a007dcf0a007ecf0a007fcf0a0008d40a0009d40a000ad40a000bd40a000cd40a000dd40a000ed40a000fd40a0010d40a0011d40a0012d40a0013d40a0014d40a0015d40a0016d40a0017d40a0018d40a0019d40a001ad40a001bd40a001cd40a001dd40a001ed40a001fd40a0020d40a0021d40a0022d40a0023d40a0024d40a0025d40a0026d40a0027d40a0028d40a0029d40a002ad40a002bd40a002cd40a002dd40a002ed40a002fd40a00b8d80a00b9d80a00bad80a00bbd80a00bcd80a00bdd80a00bed80a00bfd80a00c0d80a00c1d80a00c2d80a00c3d80a00c4d80a00c5d80a00c6d80a00c7d80a00c8d80a00c9d80a00cad80a00cbd80a00ccd80a00cdd80a00ced80a00cfd80a00d0d80a00d1d80a00d2d80a00d3d80a00d4d80a00d5d80a00d6d80a00d7d80a00d8d80a00d9d80a00dad80a00dbd80a00dcd80a00ddd80a00ded80a00dfd80a0068dd0a0069dd0a006add0a006bdd0a006cdd0a006ddd0a006edd0a006fdd0a0070dd0a0071dd0a0072dd0a0073dd0a0074dd0a0075dd0a0076dd0a0077dd0a0078dd0a0079dd0a007add0a007bdd0a007cdd0a007ddd0a007edd0a007fdd0a0080dd0a0081dd0a0082dd0a0083dd0a0084dd0a0085dd0a0086dd0a0087dd0a0088dd0a0089dd0a008add0a008bdd0a008cdd0a008ddd0a008edd0a008fdd0a0018e20a0019e20a001ae20a001be20a001ce20a001de20a001ee20a001fe20a0020e20a0021e20a0022e20a0023e20a0024e20a0025e20a0026e20a0027e20a0028e20a0029e20a002ae20a002be20a002ce20a002de20a002ee20a002fe20a0030e20a0031e20a0032e20a0033e20a0034e20a0035e20a0036e20a0037e20a0038e20a0039e20a003ae20a003be20a003ce20a003de20a003ee20a003fe20a00c8e60a00c9e60a00cae60a00cbe60a00cce60a00cde60a00cee60a00cfe60a00d0e60a00d1e60a00d2e60a00d3e60a00d4e60a00d5e60a00d6e60a00d7e60a00d8e60a00d9e60a00dae60a00dbe60a00dce60a00dde60a00dee60a00dfe60a00e0e60a00e1e60a00e2e60a00e3e60a00e4e60a00e5e60a00e6e60a00e7e60a00e8e60a00e9e60a00eae60a00ebe60a00ece60a00ede60a00eee60a00efe60a0078eb0a0079eb0a007aeb0a007beb0a007ceb0a007deb0a007eeb0a007feb0a0080eb0a0081eb0a0082eb0a0083eb0a0084eb0a0085eb0a0086eb0a0087eb0a0088eb0a0089eb0a008aeb0a008beb0a008ceb0a008deb0a008eeb0a008feb0a0090eb0a0091eb0a0092eb0a0093eb0a0094eb0a0095eb0a0096eb0a0097eb0a0098eb0a0099eb0a009aeb0a009beb0a009ceb0a009deb0a009eeb0a009feb0a0028f00a0029f00a002af00a002bf00a002cf00a002df00a002ef00a002ff00a0030f00a0031f00a0032f00a0033f00a0034f00a0035f00a0036f00a0037f00a0038f00a0039f00a003af00a003bf00a003cf00a003df00a003ef00a003ff00a0040f00a0041f00a0042f00a0043f00a0044f00a0045f00a0046f00a0047f00a0048f00a0049f00a004af00a004bf00a004cf00a004df00a004ef00a004ff00a00d8f40a00d9f40a00daf40a00dbf40a00dcf40a00ddf40a00def40a00dff40a00e0f40a00e1f40a00e2f40a00e3f40a00e4f40a00e5f40a00e6f40a00e7f40a00e8f40a00e9f40a00eaf40a00ebf40a00ecf40a00edf40a00eef40a00eff40a00f0f40a00f1f40a00f2f40a00f3f40a00f4f40a00f5f40a00f6f40a00f7f40a00f8f40a00f9f40a00faf40a00fbf40a00fcf40a00fdf40a00fef40a00fff40a0088f90a0089f90a008af90a008bf90a008cf90a008df90a008ef90a008ff90a0090f90a0091f90a0092f90a0093f90a0094f90a0095f90a0096f90a0097f90a0098f90a0099f90a009af90a009bf90a009cf90a009df90a009ef90a009ff90a00a0f90a00a1f90a00a2f90a00a3f90a00a4f90a00a5f90a00a6f90a00a7f90a00a8f90a00a9f90a00aaf90a00abf90a00acf90a00adf90a00aef90a00aff90a00
+  objInfoList:
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 33
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0
+  - terrainIndex: 34
+    terrainRotY: 0

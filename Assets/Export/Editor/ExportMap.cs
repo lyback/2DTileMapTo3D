@@ -14,12 +14,12 @@ public class ExportMap : Editor
     static string UnRemovableItemLayerName = "UnRemovableItem";
     static int SeaID = 204;
     static Vector2Int m_MapSpiltSize = new Vector2Int(30, 30);
-    [MenuItem("Map/Export")]
-    public static void Export()
+
+    [MenuItem("Map/ExportTerrain")]
+    public static void ExportTerrain()
     {
         //加载Map
         TiledMap map = LoadMap(m_MapName);
-        Dictionary<string, Dictionary<int, GameObject>> layerObjDic = GetObjRef(map);
 
         var globalGridSizeX = map.width;
         var globalGridSizeZ = map.height;
@@ -27,118 +27,119 @@ public class ExportMap : Editor
         //计算map分块大小,创建分块map配置
         int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize.x);
         int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize.y);
-        TileMapInfo[,] mapList = new TileMapInfo[m_MapSpiltSize.x, m_MapSpiltSize.y];
-        for (int w = 0; w < m_MapSpiltSize.x; w++)
-        {
-            for (int h = 0; h < m_MapSpiltSize.y; h++)
-            {
-                mapList[w, h] = GetStriptableObject<TileMapInfo>(string.Format("Assets/Map/MapInfo_{0}_{1}.asset", w, h));
-                // mapList[w, h].mapIndex = h * spiltMap_w + w;
-                mapList[w, h].posIndex = new List<int>();
-                mapList[w, h].objInfoList = new List<TileMapObjInfo>();
-            }
-        }
-        
+
         //创建地形obj配置
-        TerrainInfo terrainInfo = GetStriptableObject<TerrainInfo>("Assets/Map/TerrainInfo.asset");
-        var terrainObjDic = layerObjDic[TerrainLayerName];
-        GameObject[] objList = new GameObject[terrainObjDic.Keys.Max() + 1];
-        foreach (var kv in terrainObjDic)
-        {
-            objList[kv.Key] = kv.Value;
-        }
-        terrainInfo.gameObjectRef = objList.ToList();
+        TerrainInfo terrainInfo = GetStriptableObject<TerrainInfo>("Assets/TileMap/TerrainInfo.asset");
         terrainInfo.MapSize = new Vector2Int(globalGridSizeX, globalGridSizeZ);
         terrainInfo.SpiltMapSize = new Vector2Int(spiltMap_w, spiltMap_h);
         UnityEditor.EditorUtility.SetDirty(terrainInfo);
 
         //地形分块数据
+        Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
         for (int i = 0; i < map.layers.Length; i++)
         {
             var layer = map.layers[i];
             string layerName = layer.name;
-            if (layerName == TerrainLayerName)
+            _layerDic.Add(layerName, layer);
+        }
+        if (_layerDic.ContainsKey(TerrainLayerName))
+        {
+            var terrainTiles = _layerDic[TerrainLayerName].GetTiles();
+            for (int j = 0; j < terrainTiles.Length; j++)
             {
-                var tiles = layer.GetTiles();
-                for (int j = 0; j < tiles.Length; j++)
-                {
-                    var tile = tiles[j];
-                    int objID = tile.Gid;
-                    int rY = GetRotY(tile);
-                    if (objID != 0 && objID != SeaID)
-                    {
-                        var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
-                        int _posIndex = tile.Y * globalGridSizeX + tile.X;
-                        // int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
-                        // if (_index >= 0)
-                        // {
-                        //     var objInfo = _mapinfo.objInfoList[_index];
-                        //     objInfo.objIndex = objID;
-                        //     objInfo.objRotY = rY;
-                        //     _mapinfo.objInfoList[_index] = objInfo;
-                        // }
-                        // else
-                        // {
-                        //     var objInfo = new TileMapObjInfo();
-                        //     objInfo.objIndex = objID;
-                        //     objInfo.objRotY = rY;
-                        //     _mapinfo.posIndex.Add(_posIndex);
-                        //     _mapinfo.objInfoList.Add(objInfo);
-                        // }
+                var _terrTile = terrainTiles[j];
+                int _terrRY = GetRotY(_terrTile);
+                int terrainID = _terrTile.Gid;
+                GetTilesetNameAndIndex(map, _terrTile.Gid, out terrainID);
 
-                        var objInfo = new TileMapObjInfo();
-                        objInfo.objIndex = objID;
-                        objInfo.objRotY = rY;
-                        _mapinfo.posIndex.Add(_posIndex);
-                        _mapinfo.objInfoList.Add(objInfo);
-
-                        UnityEditor.EditorUtility.SetDirty(_mapinfo);
-                    }
-                }
-            }
-            else if(layerName == UnRemovableItemLayerName || layerName == RemovableItemLayerName){
-                var tiles = layer.GetTiles();
-                for (int j = 0; j < tiles.Length; j++)
+                if (terrainID != 0 && terrainID != SeaID)
                 {
-                    var tile = tiles[j];
-                    int objID = tile.Gid;
-                    int rY = GetRotY(tile);
-                    if (objID != 0 && objID != SeaID)
-                    {
-                        var _mapinfo = mapList[tile.X / spiltMap_w, tile.Y / spiltMap_h];
-                        int _posIndex = tile.Y * globalGridSizeX + tile.X;
-                        int _index = _mapinfo.posIndex.FindIndex((a) => { return a == _posIndex; });
-                        if (_index >= 0)
-                        {
-                            var objInfo = _mapinfo.objInfoList[_index];
-                            objInfo.objIndex = objID;
-                            objInfo.itemRotY = rY;
-                            _mapinfo.objInfoList[_index] = objInfo;
-                        }
-                        else
-                        {
-                            var objInfo = new TileMapObjInfo();
-                            objInfo.objIndex = objID;
-                            objInfo.itemRotY = rY;
-                            _mapinfo.posIndex.Add(_posIndex);
-                            _mapinfo.objInfoList.Add(objInfo);
-                        }
-                        UnityEditor.EditorUtility.SetDirty(_mapinfo);
-                    }
+                    var _mapinfo = GetStriptableObject<TileMapInfo>(string.Format("Assets/TileMap/Map/MapInfo_{0}_{1}.asset", _terrTile.X / spiltMap_w, _terrTile.Y / spiltMap_h));
+                    int _posIndex = _terrTile.Y * globalGridSizeX + _terrTile.X;
+
+                    var objInfo = new TileMapObjInfo();
+                    objInfo.terrainIndex = terrainID == SeaID ? 0 : terrainID;
+                    objInfo.terrainRotY = _terrRY;
+
+                    _mapinfo.posIndex.Add(_posIndex);
+                    _mapinfo.objInfoList.Add(objInfo);
+
+                    UnityEditor.EditorUtility.SetDirty(_mapinfo);
                 }
             }
         }
 
         UnityEditor.AssetDatabase.SaveAssets();
     }
+    [MenuItem("Map/ExportObj")]
+    public static void ExportObj()
+    {
+        //加载Map
+        TiledMap map = LoadMap(m_MapName);
+        var globalGridSizeX = map.width;
+        var globalGridSizeZ = map.height;
+        //计算map分块大小
+        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize.x);
+        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize.y);
 
+        //物件分块数据
+        Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
+        for (int i = 0; i < map.layers.Length; i++)
+        {
+            var layer = map.layers[i];
+            string layerName = layer.name;
+            _layerDic.Add(layerName, layer);
+        }
+        var unRemoveTiles = _layerDic.ContainsKey(UnRemovableItemLayerName) ? _layerDic[UnRemovableItemLayerName].GetTiles() : null;
+        var removableTiles = _layerDic.ContainsKey(RemovableItemLayerName) ? _layerDic[RemovableItemLayerName].GetTiles() : null;
+        for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
+        {
+            TiledLayerTile _unRemoveTile = new TiledLayerTile();
+            int _unRemoveID = 0;
+            int _unRemoveRY = 0;
+            string _unRemoveName = "";
+            if (unRemoveTiles != null)
+            {
+                _unRemoveTile = unRemoveTiles[i];
+                _unRemoveRY = GetRotY(_unRemoveTile);
+                _unRemoveID = _unRemoveTile.Gid;
+                _unRemoveName = GetTilesetNameAndIndex(map, _unRemoveTile.Gid, out _unRemoveID);
+            }
+            TiledLayerTile _removableTile = new TiledLayerTile();
+            int _removableID = 0;
+            int _removableRY = 0;
+            string _removableName = "";
+            if (removableTiles != null)
+            {
+                _removableTile = removableTiles[i];
+                _removableRY = GetRotY(_removableTile);
+                _removableID = _removableTile.Gid;
+                _removableName = GetTilesetNameAndIndex(map, _removableTile.Gid, out _removableID);
+            }
+            if (_unRemoveID == 1 || _removableID == 1)
+            {
+                int X = _unRemoveID != 0 ? _unRemoveTile.X : _removableTile.X;
+                int Y = _unRemoveID != 0 ? _unRemoveTile.Y : _removableTile.Y;
+
+                var _mapinfo = GetStriptableObject<ItemMapInfo>(string.Format("Assets/TileMap/Item/ItemInfo_{0}_{1}.asset", X / spiltMap_w, Y / spiltMap_h));
+                int _posIndex = Y * globalGridSizeX + X;
+
+                var objInfo = new ItemMapObjInfo();
+                objInfo.itemName = _unRemoveID == 1 ? _unRemoveName : _removableName;
+                objInfo.itemRotY = _unRemoveID == 1 ? _unRemoveRY : _removableRY;
+
+                _mapinfo.posIndex.Add(_posIndex);
+                _mapinfo.objInfoList.Add(objInfo);
+
+                UnityEditor.EditorUtility.SetDirty(_mapinfo);
+            }
+        }
+
+        UnityEditor.AssetDatabase.SaveAssets();
+    }
     private static TiledMap LoadMap(string assetName)
     {
         TiledMap map = TiledMap.ReadMap(assetName);
-        return map;
-    }
-    private static Dictionary<string, Dictionary<int, GameObject>> GetObjRef(TiledMap map)
-    {
         List<TiledTileset> tiledTilesetList = new List<TiledTileset>(map.tilesets);
         tiledTilesetList.Sort((a, b) =>
         {
@@ -155,59 +156,31 @@ public class ExportMap : Editor
                 return -1;
             }
         });
-
-        var layerObjDic = new Dictionary<string, Dictionary<int, GameObject>>();
-        foreach (TiledLayer layer in map.layers)
+        map.tilesets = tiledTilesetList.ToArray();
+        return map;
+    }
+    private static string GetTilesetNameAndIndex(TiledMap map, int gid, out int index)
+    {
+        var tiledTilesetList = map.tilesets;
+        string name = "";
+        index = 0;
+        if (gid <= 0)
         {
-            layerObjDic.Add(layer.name, new Dictionary<int, GameObject>());
-            TiledLayerTile[] tiles = layer.GetTiles();
-            if (tiles != null)
+            return name;
+        }
+        for (int i = 0; i < tiledTilesetList.Length; i++)
+        {
+            if (tiledTilesetList[i].firstgid <= gid)
             {
-                foreach (TiledLayerTile tile in tiles)
-                {
-                    // Debug.LogFormat("Tile({0},{1}) = {2} H={3} V={4} D={5}", tile.X, tile.Y, tile.Gid, tile.IsFlippedHorz, tile.IsFlippedVert, tile.IsFlippedDiag);
-                    if (tile.Gid != 0 && tile.Gid != SeaID && !layerObjDic[layer.name].ContainsKey(tile.Gid))
-                    {
-                        int texIndex = 0;
-                        int tilesetIndex = 0;
-                        for (int i = 0; i < tiledTilesetList.Count; i++)
-                        {
-                            if (tiledTilesetList[i].firstgid > tile.Gid)
-                            {
-                                tilesetIndex = i - 1;
-                                texIndex = tile.Gid - tiledTilesetList[i - 1].firstgid + 1;
-                            }
-                            else
-                            {
-                                texIndex = tile.Gid;
-                            }
-                        }
-                        string objName = Path.GetFileNameWithoutExtension(tiledTilesetList[tilesetIndex].source) + "@" + texIndex;
-                        GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("Assets/Art/TileMap/Prefab/{0}.prefab", objName));
-                        if (obj == null)
-                        {
-                            Debug.LogError("找不到预制：" + string.Format("Assets/Art/TileMap/Prefab/{0}.prefab", objName));
-                        }
-                        else
-                        {
-                            layerObjDic[layer.name].Add(tile.Gid, obj);
-                        }
-                    }
-
-                }
+                name = Path.GetFileNameWithoutExtension(tiledTilesetList[i].source);
+                index = gid - tiledTilesetList[i].firstgid + 1;
+            }
+            else
+            {
+                return name;
             }
         }
-        return layerObjDic;
-    }
-    private static List<string> RemoveDuplicates(List<string> myList)
-    {
-        List<string> newList = new List<string>();
-
-        for (int i = 0; i < myList.Count; i++)
-            if (!newList.Contains(myList[i].ToString()))
-                newList.Add(myList[i].ToString());
-
-        return newList;
+        return name;
     }
     private static int GetRotY(TiledLayerTile tile)
     {
