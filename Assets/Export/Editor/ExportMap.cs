@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System.Linq;
+using System.Text;
 using TiledJsonUtility;
 
 public class ExportMap : Editor
@@ -18,6 +18,7 @@ public class ExportMap : Editor
     [MenuItem("Map/ExportTerrain")]
     public static void ExportTerrain()
     {
+        Directory.Delete(Application.dataPath+"/TileMap/Map/",true);
         //加载Map
         TiledMap map = LoadMap(m_MapName);
 
@@ -74,6 +75,7 @@ public class ExportMap : Editor
     [MenuItem("Map/ExportObj")]
     public static void ExportObj()
     {
+        Directory.Delete(Application.dataPath+"/TileMap/Item/",true);
         //加载Map
         TiledMap map = LoadMap(m_MapName);
         var globalGridSizeX = map.width;
@@ -137,6 +139,64 @@ public class ExportMap : Editor
 
         UnityEditor.AssetDatabase.SaveAssets();
     }
+    
+    [MenuItem("Map/ExportServerData")]
+    public static void ExportServerdata()
+    {
+        //加载Map
+        TiledMap map = LoadMap(m_MapName);
+        var globalGridSizeX = map.width;
+        var globalGridSizeZ = map.height;
+        //物件分块数据
+        Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
+        for (int i = 0; i < map.layers.Length; i++)
+        {
+            var layer = map.layers[i];
+            string layerName = layer.name;
+            _layerDic.Add(layerName, layer);
+        }
+        var terrainTiles = _layerDic.ContainsKey(TerrainLayerName) ? _layerDic[TerrainLayerName].GetTiles() : null;
+        var unRemoveTiles = _layerDic.ContainsKey(UnRemovableItemLayerName) ? _layerDic[UnRemovableItemLayerName].GetTiles() : null;
+        var removableTiles = _layerDic.ContainsKey(RemovableItemLayerName) ? _layerDic[RemovableItemLayerName].GetTiles() : null;
+        StringBuilder sb = new StringBuilder();
+        sb.Append("local kingdomMapData = {\n");
+        for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
+        {
+            int _pos_x = 0;
+            int _pos_z = 0;
+            bool isUnRemove = false;
+            if(unRemoveTiles[i].Gid != 0)
+            {
+                _pos_x = globalGridSizeX - unRemoveTiles[i].X;
+                _pos_z = globalGridSizeZ - unRemoveTiles[i].Y;
+                isUnRemove = true;
+            }
+            else if (terrainTiles[i].Gid == SeaID)
+            {
+                _pos_x = globalGridSizeX - terrainTiles[i].X;
+                _pos_z = globalGridSizeZ - terrainTiles[i].Y;
+                isUnRemove = true;
+            }
+            if (isUnRemove)
+            {
+                int temp = _pos_x;
+                _pos_x = _pos_z;
+                _pos_z = temp;
+                int posIndex = _pos_x *10000+_pos_z;
+                // sb.Append(posIndex+",");
+                sb.AppendFormat("[{0}] = 2,\n",posIndex);
+            }
+        }
+        sb.Append("};return kingdomMapData");
+
+        string path = string.Format("{0}/TileMapSerData/kingdomMapData.lua",Application.dataPath);
+        var bytes = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
+        Stream stream = File.Open (path, FileMode.Create);
+        stream.Write (bytes, 0, bytes.Length);
+        stream.Close ();
+		
+    }
+
     private static TiledMap LoadMap(string assetName)
     {
         TiledMap map = TiledMap.ReadMap(assetName);
