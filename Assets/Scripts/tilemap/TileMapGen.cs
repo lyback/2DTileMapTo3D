@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class TileMapGen : MonoBehaviour
 {
-    public GameObject Root;                      // 场景根节点
+    public Transform Root;                      // 场景根节点
     TerrainInfo m_objRefInfoAsset;
     TileMapInfo[,] m_tilemapInfo;
     bool[,] m_tilemapInfoIsInit;
@@ -29,19 +29,18 @@ public class TileMapGen : MonoBehaviour
     int m_lastPos_z = int.MaxValue;
 
     string m_tilemapInfoPath = "";
+    string m_tilemapInfoName = "";
     string m_itemInfoPath = "";
+    string m_itemInfoName = "";
     string m_terrainObjPath = "";
+    string m_terrainObjName = "";
     string m_itemObjPath = "";
 
-    public void Init(TerrainInfo terrainInfo, int view_w, int view_h, float offset_x, float offset_y, string tileMapInfoPath, string itemInfoPath, string terrainObjPath, string itemObjPath)
+    public void Init(TerrainInfo terrainInfo, int view_w, int view_h, float offset_x, float offset_y)
     {
         m_objRefInfoAsset = terrainInfo;
         m_offset = new Vector2(offset_x, offset_y);
         m_visibleObj = new VisiableObj[view_w, view_h];
-        m_tilemapInfoPath = tileMapInfoPath;
-        m_itemInfoPath = itemInfoPath;
-        m_terrainObjPath = terrainObjPath;
-        m_itemObjPath = itemObjPath;
 
         m_map_W = terrainInfo.MapSize_W;
         m_map_H = terrainInfo.MapSize_H;
@@ -54,6 +53,16 @@ public class TileMapGen : MonoBehaviour
         m_itemmapInfo = new ItemMapInfo[x, y];
         m_tilemapInfoIsInit = new bool[x, y];
         m_itemmapInfoIsInit = new bool[x, y];
+    }
+    public void SetResPath(string tileMapInfoPath, string tileMapInfoName, string itemInfoPath, string itemInfoName, string terrainObjPath, string terrainObjName, string itemObjPath)
+    {
+        m_tilemapInfoPath = tileMapInfoPath;
+        m_tilemapInfoName = tileMapInfoName;
+        m_itemInfoPath = itemInfoPath;
+        m_itemInfoName = itemInfoName;
+        m_terrainObjPath = terrainObjPath;
+        m_terrainObjName = terrainObjName;
+        m_itemObjPath = itemObjPath;
     }
 
     public void MoveTo(float x, float z)
@@ -128,7 +137,7 @@ public class TileMapGen : MonoBehaviour
         }
         pos_temp.x = start_x;
         pos_temp.z = start_z;
-        Root.transform.position = pos_temp;
+        Root.position = pos_temp;
     }
     Vector3 pos_temp = Vector3.zero;
     Vector3 rot_temp = Vector3.zero;
@@ -227,7 +236,7 @@ public class TileMapGen : MonoBehaviour
         {
             return pool.Get();
         }
-        pool = new TileMapObjPool(GetTerrainObj(index), Root.transform);
+        pool = new TileMapObjPool(GetTerrainObj(index), Root);
         m_terPoolDic.Add(index, pool);
         return pool.Get();
     }
@@ -246,7 +255,7 @@ public class TileMapGen : MonoBehaviour
         {
             return pool.Get();
         }
-        pool = new TileMapObjPool(GetItemObj(name), Root.transform);
+        pool = new TileMapObjPool(GetItemObj(name), Root);
         m_itemPoolDic.Add(name, pool);
         return pool.Get();
     }
@@ -258,13 +267,27 @@ public class TileMapGen : MonoBehaviour
     {
         if (!m_tilemapInfoIsInit[w, h] && m_tilemapInfo[w, h] == null)
         {
-            var mapInfo = AssetDatabase.LoadAssetAtPath<TileMapInfo>(string.Format(m_tilemapInfoPath, w, h));
+            string name = string.Format(m_tilemapInfoName, w, h);
+#if TILEMAP_TEST
+            var mapInfo = AssetDatabase.LoadAssetAtPath<TileMapInfo>(string.Format("{0}/{1}.asset", m_tilemapInfoPath, name));
             if (mapInfo != null)
             {
                 mapInfo.Init();
                 m_tilemapInfo[w, h] = mapInfo;
             }
             m_tilemapInfoIsInit[w, h] = true;
+#else
+            LoadManager.Instance.LoadAsset(m_tilemapInfoPath, name, "asset", typeof(TileMapInfo), (data) =>
+            {
+                var mapInfo = data as TileMapInfo;
+                if (mapInfo != null)
+                {
+                    mapInfo.Init();
+                    m_tilemapInfo[w, h] = mapInfo;
+                }
+                m_tilemapInfoIsInit[w, h] = true;
+            }, false);
+#endif
         }
         return m_tilemapInfo[w, h];
     }
@@ -272,13 +295,27 @@ public class TileMapGen : MonoBehaviour
     {
         if (!m_itemmapInfoIsInit[w, h] && m_itemmapInfo[w, h] == null)
         {
-            var itemInfo = AssetDatabase.LoadAssetAtPath<ItemMapInfo>(string.Format(m_itemInfoPath, w, h));
+            string name = string.Format(m_itemInfoName, w, h);
+#if TILEMAP_TEST
+            var itemInfo = AssetDatabase.LoadAssetAtPath<ItemMapInfo>(string.Format("{0}/{1}.asset", m_itemInfoPath, name));
             if (itemInfo != null)
             {
                 itemInfo.Init();
                 m_itemmapInfo[w, h] = itemInfo;
             }
             m_itemmapInfoIsInit[w, h] = true;
+#else
+            LoadManager.Instance.LoadAsset(m_itemInfoPath, name, "asset", typeof(ItemMapInfo), (data) =>
+            {
+                var itemInfo = data as ItemMapInfo;
+                if (itemInfo != null)
+                {
+                    itemInfo.Init();
+                    m_itemmapInfo[w, h] = itemInfo;
+                }
+                m_itemmapInfoIsInit[w, h] = true;
+            }, false);
+#endif
         }
         return m_itemmapInfo[w, h];
     }
@@ -287,8 +324,17 @@ public class TileMapGen : MonoBehaviour
         GameObject obj = null;
         if (!m_terrainObjRef.TryGetValue(index, out obj))
         {
-            obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format(m_terrainObjPath, index));
+            string name = string.Format(m_terrainObjName, index);
+#if TILEMAP_TEST
+            obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_terrainObjPath, name));
             m_terrainObjRef.Add(index, obj);
+#else
+            LoadManager.Instance.LoadAsset(m_terrainObjPath, name, "prefab", typeof(GameObject), (data) =>
+            {
+                obj = data as GameObject;
+                m_terrainObjRef.Add(index, obj);
+            }, false);
+#endif
         }
         return obj;
     }
@@ -298,8 +344,16 @@ public class TileMapGen : MonoBehaviour
         GameObject obj = null;
         if (!m_itemObjRef.TryGetValue(name, out obj))
         {
-            obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format(m_itemObjPath, name));
+#if TILEMAP_TEST
+            obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_itemObjPath, name));
             m_itemObjRef.Add(name, obj);
+#else
+            LoadManager.Instance.LoadAsset(m_itemObjPath, name, "prefab", typeof(GameObject), (data) =>
+            {
+                obj = data as GameObject;
+                m_itemObjRef.Add(name, obj);
+            }, false);
+#endif
         }
         return obj;
     }

@@ -14,11 +14,15 @@ public class TestMove : MonoBehaviour
     void Start()
     {
         var terrainInfo = AssetDatabase.LoadAssetAtPath<TerrainInfo>(string.Format("Assets/TileMap/TerrainInfo.asset"));
-        string tilemapInfoPath = "Assets/TileMap/MapInfo/MapInfo_{0}_{1}.asset";
-        string itemInfoPath = "Assets/TileMap/ItemInfo/ItemInfo_{0}_{1}.asset";
-        string tilemapObjPath = "Assets/TileMap/TileMapObj/Prefab/Terrain/Terrain@{0}.prefab";
-        string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/item/{0}.prefab";
-        gen.Init(terrainInfo, size_W, size_H , -size_W/2, -size_H/2, tilemapInfoPath,itemInfoPath,tilemapObjPath,itemObjPath);
+        string tilemapInfoPath = "Assets/TileMap/MapInfo";
+        string tilemapInfoName = "MapInfo_{0}_{1}";
+        string itemInfoPath = "Assets/TileMap/ItemInfo";
+        string itemInfoName = "ItemInfo_{0}_{1}";
+        string tilemapObjPath = "Assets/TileMap/TileMapObj/Prefab/Terrain";
+        string tilemapObjName = "Terrain@{0}";
+        string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/item";
+        gen.Init(terrainInfo, size_W, size_H, -size_W / 2, -size_H / 2);
+        gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, tilemapObjPath, tilemapObjName, itemObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }
     void Update()
@@ -31,23 +35,23 @@ public class TestMove : MonoBehaviour
         Vector3 dirVector3 = transform.position;
         if (Input.GetKey(KeyCode.W))
         {
-            dirVector3.z += 0.01f*moveSpeed;
-            dirVector3.x += 0.01f*moveSpeed;
+            dirVector3.z += 0.01f * moveSpeed;
+            dirVector3.x += 0.01f * moveSpeed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            dirVector3.z -= 0.01f*moveSpeed;
-            dirVector3.x -= 0.01f*moveSpeed;
+            dirVector3.z -= 0.01f * moveSpeed;
+            dirVector3.x -= 0.01f * moveSpeed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            dirVector3.z += 0.01f*moveSpeed;
-            dirVector3.x -= 0.01f*moveSpeed;
+            dirVector3.z += 0.01f * moveSpeed;
+            dirVector3.x -= 0.01f * moveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            dirVector3.z -= 0.01f*moveSpeed;
-            dirVector3.x += 0.01f*moveSpeed;
+            dirVector3.z -= 0.01f * moveSpeed;
+            dirVector3.x += 0.01f * moveSpeed;
         }
         transform.position = dirVector3;
 #else
