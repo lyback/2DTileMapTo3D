@@ -13,12 +13,16 @@ public class ExportMap : Editor
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
     static int SeaID = 204;
-    static Vector2 m_MapSpiltSize = new Vector2(30, 30);
+    static int m_MapSpiltSize_x = 80;
+    static int m_MapSpiltSize_y = 80;
 
     [MenuItem("Map/ExportTerrain")]
     public static void ExportTerrain()
     {
-        Directory.Delete(Application.dataPath+"/TileMap/MapInfo/",true);
+        if (Directory.Exists(Application.dataPath + "/TileMap/MapInfo/"))
+        {
+            Directory.Delete(Application.dataPath + "/TileMap/MapInfo/", true);
+        }
         //加载Map
         TiledMap map = LoadMap(m_MapName);
 
@@ -26,8 +30,8 @@ public class ExportMap : Editor
         var globalGridSizeZ = map.height;
 
         //计算map分块大小,创建分块map配置
-        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize.x);
-        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize.y);
+        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize_x);
+        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize_y);
 
         //创建地形obj配置
         TerrainInfo terrainInfo = GetStriptableObject<TerrainInfo>("Assets/TileMap/TerrainInfo.asset");
@@ -35,7 +39,9 @@ public class ExportMap : Editor
         terrainInfo.MapSize_H = globalGridSizeZ;
         terrainInfo.SpiltMapSize_W = spiltMap_w;
         terrainInfo.SpiltMapSize_H = spiltMap_h;
-        UnityEditor.EditorUtility.SetDirty(terrainInfo);
+        terrainInfo.SpiltMap_X = m_MapSpiltSize_x;
+        terrainInfo.SpiltMap_Y = m_MapSpiltSize_y;
+        terrainInfo.MapInfoList = new bool[m_MapSpiltSize_x * m_MapSpiltSize_y];
 
         //地形分块数据
         Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
@@ -57,7 +63,10 @@ public class ExportMap : Editor
 
                 if (terrainID != 0 && terrainID != SeaID)
                 {
-                    var _mapinfo = GetStriptableObject<TileMapInfo>(string.Format("Assets/TileMap/MapInfo/MapInfo_{0}_{1}.asset", _terrTile.X / spiltMap_w, _terrTile.Y / spiltMap_h));
+                    int mapIndex_x = _terrTile.X / spiltMap_w;
+                    int mapIndex_y = _terrTile.Y / spiltMap_h;
+                    terrainInfo.MapInfoList[mapIndex_x*m_MapSpiltSize_x+mapIndex_y] = true;
+                    var _mapinfo = GetStriptableObject<TileMapInfo>(string.Format("Assets/TileMap/MapInfo/MapInfo_{0}_{1}.asset", mapIndex_x, mapIndex_y));
                     int _posIndex = _terrTile.Y * globalGridSizeX + _terrTile.X;
 
                     var objInfo = new TileMapObjInfo();
@@ -72,19 +81,33 @@ public class ExportMap : Editor
             }
         }
 
+        UnityEditor.EditorUtility.SetDirty(terrainInfo);
         UnityEditor.AssetDatabase.SaveAssets();
     }
     [MenuItem("Map/ExportObj")]
     public static void ExportObj()
     {
-        Directory.Delete(Application.dataPath+"/TileMap/ItemInfo/",true);
+        if (Directory.Exists(Application.dataPath + "/TileMap/ItemInfo/"))
+        {
+            Directory.Delete(Application.dataPath + "/TileMap/ItemInfo/", true);
+        }
         //加载Map
         TiledMap map = LoadMap(m_MapName);
         var globalGridSizeX = map.width;
         var globalGridSizeZ = map.height;
         //计算map分块大小
-        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize.x);
-        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize.y);
+        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize_x);
+        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize_y);
+
+        //创建地形obj配置
+        TerrainInfo terrainInfo = GetStriptableObject<TerrainInfo>("Assets/TileMap/TerrainInfo.asset");
+        terrainInfo.MapSize_W = globalGridSizeX;
+        terrainInfo.MapSize_H = globalGridSizeZ;
+        terrainInfo.SpiltMapSize_W = spiltMap_w;
+        terrainInfo.SpiltMapSize_H = spiltMap_h;
+        terrainInfo.SpiltMap_X = m_MapSpiltSize_x;
+        terrainInfo.SpiltMap_Y = m_MapSpiltSize_y;
+        terrainInfo.ItemInfoList = new bool[m_MapSpiltSize_x * m_MapSpiltSize_y];
 
         //物件分块数据
         Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
@@ -125,7 +148,11 @@ public class ExportMap : Editor
                 int X = _unRemoveID != 0 ? _unRemoveTile.X : _removableTile.X;
                 int Y = _unRemoveID != 0 ? _unRemoveTile.Y : _removableTile.Y;
 
-                var _mapinfo = GetStriptableObject<ItemMapInfo>(string.Format("Assets/TileMap/ItemInfo/ItemInfo_{0}_{1}.asset", X / spiltMap_w, Y / spiltMap_h));
+                
+                int itemIndex_x = X / spiltMap_w;
+                int itemIndex_y = Y / spiltMap_h;
+                terrainInfo.ItemInfoList[itemIndex_x * m_MapSpiltSize_x + itemIndex_y] = true;
+                var _mapinfo = GetStriptableObject<ItemMapInfo>(string.Format("Assets/TileMap/ItemInfo/ItemInfo_{0}_{1}.asset",itemIndex_x, itemIndex_y));
                 int _posIndex = Y * globalGridSizeX + X;
 
                 var objInfo = new ItemMapObjInfo();
@@ -139,9 +166,10 @@ public class ExportMap : Editor
             }
         }
 
+        UnityEditor.EditorUtility.SetDirty(terrainInfo);
         UnityEditor.AssetDatabase.SaveAssets();
     }
-    
+
     [MenuItem("Map/ExportServerData")]
     public static void ExportServerdata()
     {
@@ -167,7 +195,7 @@ public class ExportMap : Editor
             int _pos_x = 0;
             int _pos_z = 0;
             bool isUnRemove = false;
-            if(unRemoveTiles[i].Gid != 0)
+            if (unRemoveTiles[i].Gid != 0)
             {
                 _pos_x = globalGridSizeX - unRemoveTiles[i].X;
                 _pos_z = globalGridSizeZ - unRemoveTiles[i].Y;
@@ -184,19 +212,19 @@ public class ExportMap : Editor
                 int temp = _pos_x;
                 _pos_x = _pos_z;
                 _pos_z = temp;
-                int posIndex = _pos_x *10000+_pos_z;
+                int posIndex = _pos_x * 10000 + _pos_z;
                 // sb.Append(posIndex+",");
-                sb.AppendFormat("[{0}] = 2,\n",posIndex);
+                sb.AppendFormat("[{0}] = 2,\n", posIndex);
             }
         }
         sb.Append("};return kingdomMapData");
 
-        string path = string.Format("{0}/TileMapSerData/kingdomMapData.lua",Application.dataPath);
+        string path = string.Format("{0}/TileMapSerData/kingdomMapData.lua", Application.dataPath);
         var bytes = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
-        Stream stream = File.Open (path, FileMode.Create);
-        stream.Write (bytes, 0, bytes.Length);
-        stream.Close ();
-		
+        Stream stream = File.Open(path, FileMode.Create);
+        stream.Write(bytes, 0, bytes.Length);
+        stream.Close();
+
     }
 
     private static TiledMap LoadMap(string assetName)

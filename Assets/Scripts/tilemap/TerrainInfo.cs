@@ -9,5 +9,8 @@ public class TerrainInfo : ScriptableObject
     public int MapSize_H;
     public int SpiltMapSize_W;
     public int SpiltMapSize_H;
-    // public List<GameObject> gameObjectRef;
+    public int SpiltMap_X;
+    public int SpiltMap_Y;
+    public bool[] MapInfoList;
+    public bool[] ItemInfoList;
 }
