@@ -6,12 +6,12 @@ public class TileMapInfo : ScriptableObject
 
     // public int mapIndex;
     public List<int> posIndex;
-    public List<TileMapObjInfo> objInfoList;
-    public Dictionary<int, TileMapObjInfo> mapInfoDic;
+    public List<int> terrainIndexList;
+    public Dictionary<int, int> mapInfoDic;
     public TileMapInfo()
     {
         posIndex = new List<int>();
-        objInfoList = new List<TileMapObjInfo>();
+        terrainIndexList = new List<int>();
     }
     public void Init()
     {
@@ -20,18 +20,10 @@ public class TileMapInfo : ScriptableObject
             return;
         }
         int count = posIndex.Count;
-        mapInfoDic = new Dictionary<int, TileMapObjInfo>(count);
+        mapInfoDic = new Dictionary<int, int>(count);
         for (int i = 0; i < count; i++)
         {
-            mapInfoDic.Add(posIndex[i], objInfoList[i]);
+            mapInfoDic.Add(posIndex[i], terrainIndexList[i]);
         }
     }
-}
-[System.Serializable]
-public struct TileMapObjInfo
-{
-    //地块ID
-    public int terrainIndex;
-    //地块旋转
-    public int terrainRotY;
 }

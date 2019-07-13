@@ -5,12 +5,12 @@ public class ItemMapInfo : ScriptableObject
 
     // public int mapIndex;
     public List<int> posIndex;
-    public List<ItemMapObjInfo> objInfoList;
-    public Dictionary<int, ItemMapObjInfo> mapInfoDic;
+    public List<string> itemNameList;
+    public Dictionary<int, string> mapInfoDic;
     public ItemMapInfo()
     {
         posIndex = new List<int>();
-        objInfoList = new List<ItemMapObjInfo>();
+        itemNameList = new List<string>();
     }
     public void Init()
     {
@@ -19,20 +19,20 @@ public class ItemMapInfo : ScriptableObject
             return;
         }
         int count = posIndex.Count;
-        mapInfoDic = new Dictionary<int, ItemMapObjInfo>(count);
+        mapInfoDic = new Dictionary<int, string>(count);
         for (int i = 0; i < count; i++)
         {
-            mapInfoDic.Add(posIndex[i], objInfoList[i]);
+            mapInfoDic.Add(posIndex[i], itemNameList[i]);
         }
     }
 
 }
-[System.Serializable]
-public struct ItemMapObjInfo
-{
-    //物件ID
-    public string itemName;
-    //物件旋转
-    public int itemRotY;
+// [System.Serializable]
+// public struct ItemMapObjInfo
+// {
+//     //物件ID
+//     public string itemName;
+//     //物件旋转
+//     // public int itemRotY;
 
-}
+// }

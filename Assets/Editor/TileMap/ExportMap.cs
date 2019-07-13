@@ -12,6 +12,7 @@ public class ExportMap : Editor
     static string TerrainLayerName = "Terrain";
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
+    static string TerrainAphlaLayerName = "TerrainAphla";
     static int SeaID = 204;
     static int m_MapSpiltSize_x = 80;
     static int m_MapSpiltSize_y = 80;
@@ -69,12 +70,11 @@ public class ExportMap : Editor
                     var _mapinfo = GetStriptableObject<TileMapInfo>(string.Format("Assets/TileMap/MapInfo/MapInfo_{0}_{1}.asset", mapIndex_x, mapIndex_y));
                     int _posIndex = _terrTile.Y * globalGridSizeX + _terrTile.X;
 
-                    var objInfo = new TileMapObjInfo();
-                    objInfo.terrainIndex = terrainID == SeaID ? 0 : terrainID;
-                    objInfo.terrainRotY = _terrRY;
+                    int terrainIndex = terrainID == SeaID ? 0 : terrainID;
+                    // objInfo.terrainRotY = _terrRY;
 
                     _mapinfo.posIndex.Add(_posIndex);
-                    _mapinfo.objInfoList.Add(objInfo);
+                    _mapinfo.terrainIndexList.Add(terrainIndex);
 
                     UnityEditor.EditorUtility.SetDirty(_mapinfo);
                 }
@@ -155,12 +155,11 @@ public class ExportMap : Editor
                 var _mapinfo = GetStriptableObject<ItemMapInfo>(string.Format("Assets/TileMap/ItemInfo/ItemInfo_{0}_{1}.asset",itemIndex_x, itemIndex_y));
                 int _posIndex = Y * globalGridSizeX + X;
 
-                var objInfo = new ItemMapObjInfo();
-                objInfo.itemName = _unRemoveID == 1 ? _unRemoveName : _removableName;
-                objInfo.itemRotY = _unRemoveID == 1 ? _unRemoveRY : _removableRY;
+                string itemName = _unRemoveID == 1 ? _unRemoveName : _removableName;
+                // objInfo.itemRotY = _unRemoveID == 1 ? _unRemoveRY : _removableRY;
 
                 _mapinfo.posIndex.Add(_posIndex);
-                _mapinfo.objInfoList.Add(objInfo);
+                _mapinfo.itemNameList.Add(itemName);
 
                 UnityEditor.EditorUtility.SetDirty(_mapinfo);
             }
@@ -168,6 +167,11 @@ public class ExportMap : Editor
 
         UnityEditor.EditorUtility.SetDirty(terrainInfo);
         UnityEditor.AssetDatabase.SaveAssets();
+    }
+
+    [MenuItem("Map/ExportTerrainAphla")]
+    public static void ExportTerrainAphla(){
+
     }
 
     [MenuItem("Map/ExportServerData")]

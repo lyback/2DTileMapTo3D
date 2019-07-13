@@ -21,13 +21,14 @@ public class TestMove : MonoBehaviour
         string tilemapObjPath = "Assets/TileMap/TileMapObj/Prefab/Terrain";
         string tilemapObjName = "Terrain@{0}";
         string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/item";
-        gen.Init(terrainInfo, size_W, size_H, -size_W / 2, -size_H / 2);
+        // gen.Init(terrainInfo, size_W, size_H, -size_W / 2, -size_H / 2);
+        gen.InitEx(terrainInfo, 6, 16, -2, -6);
         gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, tilemapObjPath, tilemapObjName, itemObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }
     void Update()
     {
-        gen.MoveTo(transform.position.x, transform.position.z);
+        gen.MoveToEx(transform.position.x, transform.position.z);
     }
     private void FixedUpdate()
     {

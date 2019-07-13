@@ -41,8 +41,6 @@ public class TileMapGen : MonoBehaviour
     string m_terrainObjName = "";
     string m_itemObjPath = "";
 
-    static TileMapObjInfo s_TileMapObjInfo = default(TileMapObjInfo);
-    static ItemMapObjInfo s_ItemMapObjInfo = default(ItemMapObjInfo);
     public void Init(TerrainInfo terrainInfo, int view_w, int view_h, float offset_x, float offset_y)
     {
         m_terrainInfoAsset = terrainInfo;
@@ -50,6 +48,30 @@ public class TileMapGen : MonoBehaviour
         m_visibleObj = new VisiableObj[view_w, view_h];
         m_needVisibleObj = new VisiableObjEx[view_w, view_h];
         m_visiableCount = view_w * view_h;
+        m_visiablehalfCount = m_visiableCount / 2;
+
+
+        m_map_W = terrainInfo.MapSize_W;
+        m_map_H = terrainInfo.MapSize_H;
+        m_splitMap_X = terrainInfo.SpiltMap_X;
+        m_splitMap_Y = terrainInfo.SpiltMap_Y;
+
+        m_tilemap_W = terrainInfo.SpiltMapSize_W;
+        m_tilemap_H = terrainInfo.SpiltMapSize_H;
+        int x = Mathf.CeilToInt(m_map_W * 1f / m_tilemap_W);
+        int y = Mathf.CeilToInt(m_map_H * 1f / m_tilemap_H);
+        m_tilemapInfo = new TileMapInfo[x, y];
+        m_itemmapInfo = new ItemMapInfo[x, y];
+        m_tilemapInfoIsInit = new bool[x, y];
+        m_itemmapInfoIsInit = new bool[x, y];
+    }
+    public void InitEx(TerrainInfo terrainInfo, int v_count, int h_count, float offset_x, float offset_y)
+    {
+        m_terrainInfoAsset = terrainInfo;
+        m_offset = new Vector2(offset_x, offset_y);
+        m_visibleObj = new VisiableObj[h_count, v_count];
+        m_needVisibleObj = new VisiableObjEx[h_count, v_count];
+        m_visiableCount = v_count * h_count;
         m_visiablehalfCount = m_visiableCount / 2;
 
 
@@ -76,6 +98,101 @@ public class TileMapGen : MonoBehaviour
         m_terrainObjPath = terrainObjPath;
         m_terrainObjName = terrainObjName;
         m_itemObjPath = itemObjPath;
+    }
+    public void MoveToEx(float x, float z)
+    {
+        int start_x = Mathf.FloorToInt(x);
+        int start_z = Mathf.FloorToInt(z);
+        if (start_x == m_lastPos_x && start_z == m_lastPos_z)
+        {
+            return;
+        }
+        m_lastPos_x = start_x;
+        m_lastPos_z = start_z;
+
+        int h_count = m_visibleObj.GetLength(0);
+        int v_count = m_visibleObj.GetLength(1);
+        bool b = true;
+        int v_center_x = start_x;
+        int v_center_z = start_z;
+        for (int i = 0; i < h_count; i++)
+        {
+            int dx = b ? 1 : 0;
+            int dz = !b ? 1 : 0;
+            v_center_x = v_center_x + dx;
+            v_center_z = v_center_z + dz;
+            for (int j = 0; j < v_count; j++)
+            {
+                int _pos_x = m_map_W - (v_center_x - j);
+                int _pos_z = m_map_H - (v_center_z + j);
+                int temp = _pos_x;
+                _pos_x = _pos_z;
+                _pos_z = temp;
+                if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
+                {
+                    m_needVisibleObj[i, j].isShow = false;
+                    SetVisibleObjNUll(i, j);
+                    continue;
+                }
+                int _index_x = _pos_x / m_tilemap_W;
+                int _index_z = _pos_z / m_tilemap_H;
+
+                TileMapInfo _mapInfo = null;
+                ItemMapInfo _itemInfo = null;
+                bool hasTileMapInfo = GetTileMapInfo(_index_x, _index_z, out _mapInfo);
+                bool hasItemMapInfo = GetItemMapInfo(_index_x, _index_z, out _itemInfo);
+
+                int map_index = _pos_z * m_map_W + _pos_x;
+
+                int terrainIndex = 0;
+                string itemName = null;
+                bool hasMapObj = false;
+                bool hasItemObj = false;
+                if (hasTileMapInfo)
+                {
+                    hasMapObj = _mapInfo.mapInfoDic.TryGetValue(map_index, out terrainIndex);
+                }
+                if (hasItemMapInfo)
+                {
+                    hasItemObj = _itemInfo.mapInfoDic.TryGetValue(map_index, out itemName);
+                }
+                if (hasMapObj || hasItemObj)
+                {
+                    m_needVisibleObj[i, j].isShow = true;
+                    m_needVisibleObj[i, j].terIndex = terrainIndex;
+                    m_needVisibleObj[i, j].itemName = itemName;
+                }
+                else
+                {
+                    m_needVisibleObj[i, j].isShow = false;
+                    SetVisibleObjNUll(i, j);
+                }
+            }
+            b = !b;
+        }
+        b = true;
+        v_center_x = 0;
+        v_center_z = 0;
+        for (int i = 0; i < h_count; i++)
+        {
+            int dx = b ? 1 : 0;
+            int dz = !b ? 1 : 0;
+            v_center_x = v_center_x + dx;
+            v_center_z = v_center_z + dz;
+            for (int j = 0; j < v_count; j++)
+            {
+                if (m_needVisibleObj[i, j].isShow)
+                {
+                    int _pos_x = v_center_x - j;
+                    int _pos_z = v_center_z + j;
+                    SetVisibleObj(i, j, _pos_x, _pos_z);
+                }
+            }
+            b = !b;
+        }
+        pos_temp.x = start_x;
+        pos_temp.z = start_z;
+        Root.position = pos_temp;
     }
     public void MoveTo(float x, float z)
     {
@@ -109,43 +226,30 @@ public class TileMapGen : MonoBehaviour
                 int _index_x = _pos_x / m_tilemap_W;
                 int _index_z = _pos_z / m_tilemap_H;
 
-                TileMapInfo _mapInfo = GetTileMapInfo(_index_x, _index_z);
-                ItemMapInfo _itemInfo = GetItemMapInfo(_index_x, _index_z);
+                TileMapInfo _mapInfo = null;
+                ItemMapInfo _itemInfo = null;
+                bool hasTileMapInfo = GetTileMapInfo(_index_x, _index_z, out _mapInfo);
+                bool hasItemMapInfo = GetItemMapInfo(_index_x, _index_z, out _itemInfo);
+
                 int map_index = _pos_z * m_map_W + _pos_x;
-                TileMapObjInfo mapObjInfo = s_TileMapObjInfo;
-                ItemMapObjInfo itemObjInfo = s_ItemMapObjInfo;
+
+                int terrainIndex = 0;
+                string itemName = null;
                 bool hasMapObj = false;
                 bool hasItemObj = false;
-                if (!System.Object.ReferenceEquals(_mapInfo, null))
+                if (hasTileMapInfo)
                 {
-                    hasMapObj = _mapInfo.mapInfoDic.TryGetValue(map_index, out mapObjInfo);
+                    hasMapObj = _mapInfo.mapInfoDic.TryGetValue(map_index, out terrainIndex);
                 }
-                if (!System.Object.ReferenceEquals(_itemInfo, null))
+                if (hasItemMapInfo)
                 {
-                    hasItemObj = _itemInfo.mapInfoDic.TryGetValue(map_index, out itemObjInfo);
+                    hasItemObj = _itemInfo.mapInfoDic.TryGetValue(map_index, out itemName);
                 }
                 if (hasMapObj || hasItemObj)
                 {
-                    int objIndex = 0;
-                    int objRotY = 0;
-                    if (hasMapObj)
-                    {
-                        objIndex = mapObjInfo.terrainIndex;
-                        objRotY = mapObjInfo.terrainRotY;
-                    }
-                    string itemName = "";
-                    int itemRotY = 0;
-                    if (hasItemObj)
-                    {
-                        itemName = itemObjInfo.itemName;
-                        itemRotY = itemObjInfo.itemRotY;
-                    }
                     m_needVisibleObj[i, j].isShow = true;
-                    m_needVisibleObj[i, j].terIndex = objIndex;
-                    m_needVisibleObj[i, j].terRotY = objRotY;
+                    m_needVisibleObj[i, j].terIndex = terrainIndex;
                     m_needVisibleObj[i, j].itemName = itemName;
-                    m_needVisibleObj[i, j].itemRotY = itemRotY;
-                    // SetVisibleObj(i, j, objIndex, objRotY, itemName, itemRotY);
                 }
                 else
                 {
@@ -160,7 +264,7 @@ public class TileMapGen : MonoBehaviour
             {
                 if (m_needVisibleObj[i, j].isShow)
                 {
-                    SetVisibleObj(i, j);
+                    SetVisibleObj(i, j, i, j);
                 }
             }
         }
@@ -169,21 +273,21 @@ public class TileMapGen : MonoBehaviour
         Root.position = pos_temp;
     }
     Vector3 pos_temp = Vector3.zero;
-    Vector3 rot_temp = Vector3.zero;
+    Vector3 rot_temp = new Vector3(0,-135,0);
     Vector3 hide_temp = new Vector3(0f, 1000f, 0f);
     Transform tra_temp;
-    void SetVisibleObj(int i, int j)
+    void SetVisibleObj(int i, int j, int posx, int posz)
     {
         var _visibleObj = m_visibleObj[i, j];
         int terIndex = m_needVisibleObj[i, j].terIndex;
-        int terRotY = m_needVisibleObj[i, j].terRotY;
+        // int terRotY = m_needVisibleObj[i, j].terRotY;
         string itemName = m_needVisibleObj[i, j].itemName;
-        int itemRotY = m_needVisibleObj[i, j].itemRotY;
+        // int itemRotY = m_needVisibleObj[i, j].itemRotY;
         //地形
         var _terObject = _visibleObj.ter;
-        pos_temp.x = i + m_offset.x;
-        pos_temp.z = j + m_offset.y;
-        rot_temp.y = terRotY - 135;
+        pos_temp.x = posx + m_offset.x;
+        pos_temp.z = posz + m_offset.y;
+        // rot_temp.y = terRotY - 135;
 
         if (!System.Object.ReferenceEquals(_terObject, null))
         {
@@ -211,7 +315,7 @@ public class TileMapGen : MonoBehaviour
 
         //物件
         var _itemObject = _visibleObj.item;
-        rot_temp.y = itemRotY;
+        // rot_temp.y = itemRotY;
 
         if (!System.Object.ReferenceEquals(_itemObject, null))
         {
@@ -296,14 +400,15 @@ public class TileMapGen : MonoBehaviour
     {
         m_itemPoolDic[name].Recycle(obj);
     }
-    TileMapInfo GetTileMapInfo(int w, int h)
+    bool GetTileMapInfo(int w, int h, out TileMapInfo info)
     {
-        if (!m_tilemapInfoIsInit[w, h] && m_tilemapInfo[w, h] == null)
+        if (!m_tilemapInfoIsInit[w, h])
         {
-            if (!m_terrainInfoAsset.MapInfoList[w*m_splitMap_X + h])
+            if (!m_terrainInfoAsset.MapInfoList[w * m_splitMap_X + h])
             {
                 m_tilemapInfoIsInit[w, h] = true;
-                return null;
+                info = null;
+                return false;
             }
             string name = string.Format(m_tilemapInfoName, w, h);
 #if TILEMAP_TEST
@@ -327,16 +432,18 @@ public class TileMapGen : MonoBehaviour
             }, false);
 #endif
         }
-        return m_tilemapInfo[w, h];
+        info = m_tilemapInfo[w, h];
+        return m_terrainInfoAsset.MapInfoList[w * m_splitMap_X + h];
     }
-    ItemMapInfo GetItemMapInfo(int w, int h)
+    bool GetItemMapInfo(int w, int h, out ItemMapInfo info)
     {
-        if (!m_itemmapInfoIsInit[w, h] && m_itemmapInfo[w, h] == null)
+        if (!m_itemmapInfoIsInit[w, h])
         {
-            if (!m_terrainInfoAsset.ItemInfoList[w*m_splitMap_X + h])
+            if (!m_terrainInfoAsset.ItemInfoList[w * m_splitMap_X + h])
             {
                 m_itemmapInfoIsInit[w, h] = true;
-                return null;
+                info = null;
+                return false;
             }
             string name = string.Format(m_itemInfoName, w, h);
 #if TILEMAP_TEST
@@ -360,7 +467,8 @@ public class TileMapGen : MonoBehaviour
             }, false);
 #endif
         }
-        return m_itemmapInfo[w, h];
+        info = m_itemmapInfo[w, h];
+        return m_terrainInfoAsset.ItemInfoList[w * m_splitMap_X + h];
     }
     GameObject GetTerrainObj(int index)
     {
@@ -411,9 +519,9 @@ public class TileMapGen : MonoBehaviour
     {
         public bool isShow;
         public int terIndex;
-        public int terRotY;
+        // public int terRotY;
         public string itemName;
-        public int itemRotY;
+        // public int itemRotY;
     }
 
 }
