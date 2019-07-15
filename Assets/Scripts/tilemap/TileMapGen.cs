@@ -21,10 +21,11 @@ public class TileMapGen : MonoBehaviour
     int m_splitMap_Y;
     Vector2 m_offset;
 
-    VisiableObj[,] m_visibleObj;
+    VisiableObj[,] m_visibleObj;    
+    VisiableTerEx[,] m_needVisibleTer;
+    VisiableItemEx[,] m_needVisibleItem;
     int m_visiableCount = 0;
     int m_visiablehalfCount = 0;
-    VisiableObjEx[,] m_needVisibleObj;
     Dictionary<int, TileMapObjPool> m_terPoolDic = new Dictionary<int, TileMapObjPool>();
     Dictionary<int, GameObject> m_terrainObjRef = new Dictionary<int, GameObject>();
     Dictionary<string, TileMapObjPool> m_itemPoolDic = new Dictionary<string, TileMapObjPool>();
@@ -46,7 +47,8 @@ public class TileMapGen : MonoBehaviour
         m_terrainInfoAsset = terrainInfo;
         m_offset = new Vector2(offset_x, offset_y);
         m_visibleObj = new VisiableObj[view_w, view_h];
-        m_needVisibleObj = new VisiableObjEx[view_w, view_h];
+        m_needVisibleTer = new VisiableTerEx[view_w, view_h];
+        m_needVisibleItem = new VisiableItemEx[view_w, view_h];
         m_visiableCount = view_w * view_h;
         m_visiablehalfCount = m_visiableCount / 2;
 
@@ -70,7 +72,8 @@ public class TileMapGen : MonoBehaviour
         m_terrainInfoAsset = terrainInfo;
         m_offset = new Vector2(offset_x, offset_y);
         m_visibleObj = new VisiableObj[h_count, v_count];
-        m_needVisibleObj = new VisiableObjEx[h_count, v_count];
+        m_needVisibleTer = new VisiableTerEx[h_count, v_count];
+        m_needVisibleItem = new VisiableItemEx[h_count, v_count];
         m_visiableCount = v_count * h_count;
         m_visiablehalfCount = m_visiableCount / 2;
 
@@ -130,8 +133,10 @@ public class TileMapGen : MonoBehaviour
                 _pos_z = temp;
                 if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
                 {
-                    m_needVisibleObj[i, j].isShow = false;
-                    SetVisibleObjNUll(i, j);
+                    m_needVisibleTer[i, j].isShow = false;
+                    m_needVisibleItem[i, j].isShow = false;
+                    SetVisibleTerNUll(i, j);
+                    SetVisibleItemNUll(i, j);
                     continue;
                 }
                 int _index_x = _pos_x / m_tilemap_W;
@@ -144,29 +149,41 @@ public class TileMapGen : MonoBehaviour
 
                 int map_index = _pos_z * m_map_W + _pos_x;
 
+                //地形
                 int terrainIndex = 0;
-                string itemName = null;
                 bool hasMapObj = false;
-                bool hasItemObj = false;
                 if (hasTileMapInfo)
                 {
                     hasMapObj = _mapInfo.mapInfoDic.TryGetValue(map_index, out terrainIndex);
                 }
+                if (hasMapObj)
+                {
+                    m_needVisibleTer[i, j].isShow = true;
+                    m_needVisibleTer[i, j].terIndex = terrainIndex;
+                }
+                else
+                {
+                    m_needVisibleTer[i, j].isShow = false;
+                    SetVisibleTerNUll(i, j);
+                }
+                //物件
+                string itemName = null;
+                bool hasItemObj = false;
                 if (hasItemMapInfo)
                 {
                     hasItemObj = _itemInfo.mapInfoDic.TryGetValue(map_index, out itemName);
                 }
-                if (hasMapObj || hasItemObj)
+                if (hasItemObj)
                 {
-                    m_needVisibleObj[i, j].isShow = true;
-                    m_needVisibleObj[i, j].terIndex = terrainIndex;
-                    m_needVisibleObj[i, j].itemName = itemName;
+                    m_needVisibleItem[i, j].isShow = true;
+                    m_needVisibleItem[i, j].itemName = itemName;
                 }
                 else
                 {
-                    m_needVisibleObj[i, j].isShow = false;
-                    SetVisibleObjNUll(i, j);
+                    m_needVisibleItem[i, j].isShow = false;
+                    SetVisibleItemNUll(i, j);
                 }
+                
             }
             b = !b;
         }
@@ -181,11 +198,15 @@ public class TileMapGen : MonoBehaviour
             v_center_z = v_center_z + dz;
             for (int j = 0; j < v_count; j++)
             {
-                if (m_needVisibleObj[i, j].isShow)
+                int _pos_x = v_center_x - j;
+                int _pos_z = v_center_z + j;
+                if (m_needVisibleTer[i, j].isShow)
                 {
-                    int _pos_x = v_center_x - j;
-                    int _pos_z = v_center_z + j;
-                    SetVisibleObj(i, j, _pos_x, _pos_z);
+                    SetVisibleTer(i, j, _pos_x, _pos_z);
+                }
+                if (m_needVisibleItem[i, j].isShow)
+                {
+                    SetVisibleItem(i, j, _pos_x, _pos_z);
                 }
             }
             b = !b;
@@ -219,8 +240,10 @@ public class TileMapGen : MonoBehaviour
                 // int _pos_x = start_x + i;
                 if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
                 {
-                    m_needVisibleObj[i, j].isShow = false;
-                    SetVisibleObjNUll(i, j);
+                    m_needVisibleTer[i, j].isShow = false;
+                    m_needVisibleItem[i, j].isShow = false;
+                    SetVisibleTerNUll(i, j);
+                    SetVisibleItemNUll(i, j);
                     continue;
                 }
                 int _index_x = _pos_x / m_tilemap_W;
@@ -233,28 +256,39 @@ public class TileMapGen : MonoBehaviour
 
                 int map_index = _pos_z * m_map_W + _pos_x;
 
+                //地形
                 int terrainIndex = 0;
-                string itemName = null;
                 bool hasMapObj = false;
-                bool hasItemObj = false;
                 if (hasTileMapInfo)
                 {
                     hasMapObj = _mapInfo.mapInfoDic.TryGetValue(map_index, out terrainIndex);
                 }
+                if (hasMapObj)
+                {
+                    m_needVisibleTer[i, j].isShow = true;
+                    m_needVisibleTer[i, j].terIndex = terrainIndex;
+                }
+                else
+                {
+                    m_needVisibleTer[i, j].isShow = false;
+                    SetVisibleTerNUll(i, j);
+                }
+                //物件
+                string itemName = null;
+                bool hasItemObj = false;
                 if (hasItemMapInfo)
                 {
                     hasItemObj = _itemInfo.mapInfoDic.TryGetValue(map_index, out itemName);
                 }
-                if (hasMapObj || hasItemObj)
+                if (hasItemObj)
                 {
-                    m_needVisibleObj[i, j].isShow = true;
-                    m_needVisibleObj[i, j].terIndex = terrainIndex;
-                    m_needVisibleObj[i, j].itemName = itemName;
+                    m_needVisibleItem[i, j].isShow = true;
+                    m_needVisibleItem[i, j].itemName = itemName;
                 }
                 else
                 {
-                    m_needVisibleObj[i, j].isShow = false;
-                    SetVisibleObjNUll(i, j);
+                    m_needVisibleItem[i, j].isShow = false;
+                    SetVisibleItemNUll(i, j);
                 }
             }
         }
@@ -262,9 +296,13 @@ public class TileMapGen : MonoBehaviour
         {
             for (int j = 0; j < visiable_z_count; j++)
             {
-                if (m_needVisibleObj[i, j].isShow)
+                if (m_needVisibleTer[i, j].isShow)
                 {
-                    SetVisibleObj(i, j, i, j);
+                    SetVisibleTer(i, j, i, j);
+                }
+                if (m_needVisibleItem[i, j].isShow)
+                {
+                    SetVisibleItem(i, j, i, j);
                 }
             }
         }
@@ -276,13 +314,11 @@ public class TileMapGen : MonoBehaviour
     Vector3 rot_temp = new Vector3(0,-135,0);
     Vector3 hide_temp = new Vector3(0f, 1000f, 0f);
     Transform tra_temp;
-    void SetVisibleObj(int i, int j, int posx, int posz)
+    void SetVisibleTer(int i, int j, int posx, int posz)
     {
         var _visibleObj = m_visibleObj[i, j];
-        int terIndex = m_needVisibleObj[i, j].terIndex;
+        int terIndex = m_needVisibleTer[i, j].terIndex;
         // int terRotY = m_needVisibleObj[i, j].terRotY;
-        string itemName = m_needVisibleObj[i, j].itemName;
-        // int itemRotY = m_needVisibleObj[i, j].itemRotY;
         //地形
         var _terObject = _visibleObj.ter;
         pos_temp.x = posx + m_offset.x;
@@ -312,10 +348,17 @@ public class TileMapGen : MonoBehaviour
             tra_temp.localPosition = pos_temp;
             tra_temp.localEulerAngles = rot_temp;
         }
+    }
+     void SetVisibleItem(int i, int j, int posx, int posz)
+    {
+        var _visibleObj = m_visibleObj[i, j];
+        string itemName = m_needVisibleItem[i, j].itemName;
+        // int itemRotY = m_needVisibleObj[i, j].itemRotY;
 
+        pos_temp.x = posx + m_offset.x;
+        pos_temp.z = posz + m_offset.y;
         //物件
         var _itemObject = _visibleObj.item;
-        // rot_temp.y = itemRotY;
 
         if (!System.Object.ReferenceEquals(_itemObject, null))
         {
@@ -338,11 +381,10 @@ public class TileMapGen : MonoBehaviour
         {
             tra_temp = _itemObject.transform;
             tra_temp.localPosition = pos_temp;
-            tra_temp.localEulerAngles = rot_temp;
+            // tra_temp.localEulerAngles = rot_temp;
         }
-
     }
-    void SetVisibleObjNUll(int i, int j)
+    void SetVisibleTerNUll(int i, int j)
     {
         var obj = m_visibleObj[i, j];
         //地形
@@ -353,6 +395,18 @@ public class TileMapGen : MonoBehaviour
             m_visibleObj[i, j].ter = null;
             m_visibleObj[i, j].terIndex = -1;
         }
+        //物件
+        if (obj.item)
+        {
+            obj.item.transform.localPosition = hide_temp;
+            RecycleItemObj(obj.itemName, obj.item);
+            m_visibleObj[i, j].item = null;
+            m_visibleObj[i, j].itemName = "";
+        }
+    }
+    void SetVisibleItemNUll(int i, int j)
+    {
+        var obj = m_visibleObj[i, j];
         //物件
         if (obj.item)
         {
@@ -515,11 +569,15 @@ public class TileMapGen : MonoBehaviour
         public string itemName;
         public GameObject item;
     }
-    struct VisiableObjEx
+    struct VisiableTerEx
     {
         public bool isShow;
         public int terIndex;
         // public int terRotY;
+    }
+    struct VisiableItemEx
+    {
+        public bool isShow;
         public string itemName;
         // public int itemRotY;
     }
