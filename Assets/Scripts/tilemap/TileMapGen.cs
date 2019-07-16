@@ -395,14 +395,6 @@ public class TileMapGen : MonoBehaviour
             m_visibleObj[i, j].ter = null;
             m_visibleObj[i, j].terIndex = -1;
         }
-        //物件
-        if (obj.item)
-        {
-            obj.item.transform.localPosition = hide_temp;
-            RecycleItemObj(obj.itemName, obj.item);
-            m_visibleObj[i, j].item = null;
-            m_visibleObj[i, j].itemName = "";
-        }
     }
     void SetVisibleItemNUll(int i, int j)
     {
