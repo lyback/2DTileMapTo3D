@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 public class SavePrefab {
-	static string prefabPath = "Assets/Art/TileMap/Prefab/Terrain/";
+	static string prefabPath = "Assets/TileMap/TileMapObj/Prefab/Terrain/";
 	[MenuItem("GameObject/CreatePrefab")]
 	public static void CreatePrefab(){
 		

@@ -22,7 +22,7 @@ public class TestMove : MonoBehaviour
         string tilemapObjName = "Terrain@{0}";
         string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/item";
         // gen.Init(terrainInfo, size_W, size_H, -size_W / 2, -size_H / 2);
-        gen.InitEx(terrainInfo, 6, 16, -2, -6);
+        gen.InitEx(terrainInfo, 7, 22, -2+12f, -6+12f);
         gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, tilemapObjPath, tilemapObjName, itemObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }

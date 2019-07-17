@@ -13,7 +13,7 @@ public class ExportMap : Editor
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
     static string TerrainAphlaLayerName = "TerrainAphla";
-    static int SeaID = 204;
+    static int SeaID = 8;
     static int m_MapSpiltSize_x = 80;
     static int m_MapSpiltSize_y = 80;
 
