@@ -13,4 +13,5 @@ public class TerrainInfo : ScriptableObject
     public int SpiltMap_Y;
     public bool[] MapInfoList;
     public bool[] ItemInfoList;
+    public bool[] TerrainAphlaList;
 }

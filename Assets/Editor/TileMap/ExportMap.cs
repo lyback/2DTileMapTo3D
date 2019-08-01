@@ -66,7 +66,7 @@ public class ExportMap : Editor
                 {
                     int mapIndex_x = _terrTile.X / spiltMap_w;
                     int mapIndex_y = _terrTile.Y / spiltMap_h;
-                    terrainInfo.MapInfoList[mapIndex_x*m_MapSpiltSize_x+mapIndex_y] = true;
+                    terrainInfo.MapInfoList[mapIndex_x * m_MapSpiltSize_x + mapIndex_y] = true;
                     var _mapinfo = GetStriptableObject<TileMapInfo>(string.Format("Assets/TileMap/MapInfo/MapInfo_{0}_{1}.asset", mapIndex_x, mapIndex_y));
                     int _posIndex = _terrTile.Y * globalGridSizeX + _terrTile.X;
 
@@ -148,11 +148,11 @@ public class ExportMap : Editor
                 int X = _unRemoveID != 0 ? _unRemoveTile.X : _removableTile.X;
                 int Y = _unRemoveID != 0 ? _unRemoveTile.Y : _removableTile.Y;
 
-                
+
                 int itemIndex_x = X / spiltMap_w;
                 int itemIndex_y = Y / spiltMap_h;
                 terrainInfo.ItemInfoList[itemIndex_x * m_MapSpiltSize_x + itemIndex_y] = true;
-                var _mapinfo = GetStriptableObject<ItemMapInfo>(string.Format("Assets/TileMap/ItemInfo/ItemInfo_{0}_{1}.asset",itemIndex_x, itemIndex_y));
+                var _mapinfo = GetStriptableObject<ItemMapInfo>(string.Format("Assets/TileMap/ItemInfo/ItemInfo_{0}_{1}.asset", itemIndex_x, itemIndex_y));
                 int _posIndex = Y * globalGridSizeX + X;
 
                 string itemName = _unRemoveID == 1 ? _unRemoveName : _removableName;
@@ -170,8 +170,76 @@ public class ExportMap : Editor
     }
 
     [MenuItem("Map/ExportTerrainAphla")]
-    public static void ExportTerrainAphla(){
+    public static void ExportTerrainAphla()
+    {
+        if (Directory.Exists(Application.dataPath + "/TileMap/TerrainAphla/"))
+        {
+            Directory.Delete(Application.dataPath + "/TileMap/TerrainAphla/", true);
+        }
+        //加载Map
+        TiledMap map = LoadMap(m_MapName);
+        var globalGridSizeX = map.width;
+        var globalGridSizeZ = map.height;
+        //计算map分块大小
+        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize_x);
+        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize_y);
 
+        //创建地形obj配置
+        TerrainInfo terrainInfo = GetStriptableObject<TerrainInfo>("Assets/TileMap/TerrainInfo.asset");
+        terrainInfo.MapSize_W = globalGridSizeX;
+        terrainInfo.MapSize_H = globalGridSizeZ;
+        terrainInfo.SpiltMapSize_W = spiltMap_w;
+        terrainInfo.SpiltMapSize_H = spiltMap_h;
+        terrainInfo.SpiltMap_X = m_MapSpiltSize_x;
+        terrainInfo.SpiltMap_Y = m_MapSpiltSize_y;
+        terrainInfo.TerrainAphlaList = new bool[m_MapSpiltSize_x * m_MapSpiltSize_y];
+
+        //物件分块数据
+        Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
+        for (int i = 0; i < map.layers.Length; i++)
+        {
+            var layer = map.layers[i];
+            string layerName = layer.name;
+            _layerDic.Add(layerName, layer);
+        }
+        var terrainAphlaTiles = _layerDic.ContainsKey(TerrainAphlaLayerName) ? _layerDic[TerrainAphlaLayerName].GetTiles() : null;
+        for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
+        {
+            TiledLayerTile _terrainAphlaTile = new TiledLayerTile();
+            int _terrainAphlaID = 0;
+            int _terainAphlaRY = 0;
+            string _terrainAphlaName = "";
+            if (terrainAphlaTiles != null)
+            {
+                _terrainAphlaTile = terrainAphlaTiles[i];
+                _terainAphlaRY = GetRotY(_terrainAphlaTile);
+                _terrainAphlaID = _terrainAphlaTile.Gid;
+                _terrainAphlaName = GetTilesetNameAndIndex(map, _terrainAphlaTile.Gid, out _terrainAphlaID);
+            }
+
+            if (_terrainAphlaID == 1)
+            {
+                int X = _terrainAphlaTile.X;
+                int Y = _terrainAphlaTile.Y;
+
+                int itemIndex_x = X / spiltMap_w;
+                int itemIndex_y = Y / spiltMap_h;
+                terrainInfo.TerrainAphlaList[itemIndex_x * m_MapSpiltSize_x + itemIndex_y] = true;
+                var _mapinfo = GetStriptableObject<TerrainAphlaInfo>(string.Format("Assets/TileMap/TerrainAphla/TerrainAphla_{0}_{1}.asset", itemIndex_x, itemIndex_y));
+                int _posIndex = Y * globalGridSizeX + X;
+
+                string itemName = _terrainAphlaName;
+                // objInfo.itemRotY = _terainAphlaRY;
+
+                _mapinfo.posIndex.Add(_posIndex);
+                _mapinfo.terrainAphlaList.Add(itemName);
+
+                UnityEditor.EditorUtility.SetDirty(_mapinfo);
+            }
+        }
+
+        UnityEditor.EditorUtility.SetDirty(terrainInfo);
+        UnityEditor.AssetDatabase.SaveAssets();
     }
 
     [MenuItem("Map/ExportServerData")]

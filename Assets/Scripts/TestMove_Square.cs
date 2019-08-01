@@ -5,12 +5,15 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class TestMove : MonoBehaviour
+public class TestMove_Square : MonoBehaviour
 {
     public int moveSpeed = 1;
-    public TileMapGen gen;
+    public TileMapGenBase gen;
     public int size_W = 5;
     public int size_H = 5;
+    public int item_W = 8;
+    public int item_H = 8;
+
     void Start()
     {
         var terrainInfo = AssetDatabase.LoadAssetAtPath<TerrainInfo>(string.Format("Assets/TileMap/TerrainInfo.asset"));
@@ -21,14 +24,13 @@ public class TestMove : MonoBehaviour
         string tilemapObjPath = "Assets/TileMap/TileMapObj/Prefab/Terrain";
         string tilemapObjName = "Terrain@{0}";
         string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/item";
-        // gen.Init(terrainInfo, size_W, size_H, -size_W / 2, -size_H / 2);
-        gen.InitEx(terrainInfo, 7, 22, -2+12f, -6+12f);
+        gen.Init(terrainInfo, size_W, size_H, item_W, item_H, size_W/2-1, size_H/2-1);
         gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, tilemapObjPath, tilemapObjName, itemObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }
     void Update()
     {
-        gen.MoveToEx(transform.position.x, transform.position.z);
+        gen.MoveTo(transform.position.x, transform.position.z);
     }
     private void FixedUpdate()
     {
@@ -37,21 +39,17 @@ public class TestMove : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             dirVector3.z += 0.01f * moveSpeed;
-            dirVector3.x += 0.01f * moveSpeed;
         }
         if (Input.GetKey(KeyCode.S))
         {
             dirVector3.z -= 0.01f * moveSpeed;
-            dirVector3.x -= 0.01f * moveSpeed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            dirVector3.z += 0.01f * moveSpeed;
             dirVector3.x -= 0.01f * moveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            dirVector3.z -= 0.01f * moveSpeed;
             dirVector3.x += 0.01f * moveSpeed;
         }
         transform.position = dirVector3;

@@ -6,7 +6,7 @@ public class ItemMapInfo : ScriptableObject
     // public int mapIndex;
     public List<int> posIndex;
     public List<string> itemNameList;
-    public Dictionary<int, string> mapInfoDic;
+    public Dictionary<int, string> itemInfoDic;
     public ItemMapInfo()
     {
         posIndex = new List<int>();
@@ -14,15 +14,15 @@ public class ItemMapInfo : ScriptableObject
     }
     public void Init()
     {
-        if (mapInfoDic != null)
+        if (itemInfoDic != null)
         {
             return;
         }
         int count = posIndex.Count;
-        mapInfoDic = new Dictionary<int, string>(count);
+        itemInfoDic = new Dictionary<int, string>(count);
         for (int i = 0; i < count; i++)
         {
-            mapInfoDic.Add(posIndex[i], itemNameList[i]);
+            itemInfoDic.Add(posIndex[i], itemNameList[i]);
         }
     }
 
