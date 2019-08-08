@@ -14,6 +14,7 @@ public class TileMapGen_Diamond : TileMapGenBase
         m_visibleObj = new VisiableObj[h_count + itemEx_y, v_count + itemEx_x];
         m_needVisibleTer = new VisiableTerEx[h_count + itemEx_y, v_count + itemEx_x];
         m_needVisibleItem = new VisiableItemEx[h_count + itemEx_y, v_count + itemEx_x];
+        m_needVisibleAlphaTex = new VisiableItemEx[h_count + itemEx_y, v_count + itemEx_x];
 
         m_itemSizeEx_x = itemEx_x;
         m_itemSizeEx_x_Half = itemEx_x / 2;
@@ -39,8 +40,10 @@ public class TileMapGen_Diamond : TileMapGenBase
         int y = Mathf.CeilToInt(m_map_H * 1f / m_tilemap_H);
         m_tilemapInfo = new TileMapInfo[x, y];
         m_itemmapInfo = new ItemMapInfo[x, y];
+        m_alphaTexInfo = new AlphaTexInfo[x, y];
         m_tilemapInfoIsInit = new bool[x, y];
         m_itemmapInfoIsInit = new bool[x, y];
+        m_alphaTexInfoIsInit = new bool[x, y];
     }
     public override void MoveTo(float x, float z)
     {
@@ -81,6 +84,7 @@ public class TileMapGen_Diamond : TileMapGenBase
                     SetVisibleTerNUll(i, j);
                 }
                 CheckVisibleItem(_pos_x + m_itemSizeEx_x_Half + m_itemSizeEx_y_Quarter, _pos_z - m_itemSizeEx_x_Half + m_itemSizeEx_y_Quarter, i, j);
+                CheckVisibleAlphaTex(_pos_x + m_itemSizeEx_x_Half + m_itemSizeEx_y_Quarter, _pos_z - m_itemSizeEx_x_Half + m_itemSizeEx_y_Quarter, i, j);
             }
             b = !b;
         }
@@ -104,6 +108,10 @@ public class TileMapGen_Diamond : TileMapGenBase
                 if (m_needVisibleItem[i, j].isShow)
                 {
                     SetVisibleItem(i, j, _pos_x + m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter, _pos_z - m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter);
+                }
+                if (m_needVisibleAlphaTex[i, j].isShow)
+                {
+                    SetVisibleAlphaTex(i, j, _pos_x + m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter, _pos_z - m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter);
                 }
             }
             b = !b;

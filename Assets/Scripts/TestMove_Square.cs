@@ -21,11 +21,14 @@ public class TestMove_Square : MonoBehaviour
         string tilemapInfoName = "MapInfo_{0}_{1}";
         string itemInfoPath = "Assets/TileMap/ItemInfo";
         string itemInfoName = "ItemInfo_{0}_{1}";
+        string alphaTexInfoPath = "Assets/TileMap/TerrainAlpha";
+        string alphaTexInfoName = "TerrainAlpha_{0}_{1}";
         string tilemapObjPath = "Assets/TileMap/TileMapObj/Prefab/Terrain";
         string tilemapObjName = "Terrain@{0}";
-        string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/item";
+        string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/Item";
+        string alphaTexObjPath = "Assets/TileMap/TileMapObj/Prefab/TerrainAlpha";
         gen.Init(terrainInfo, size_W, size_H, item_W, item_H, size_W/2-1, size_H/2-1);
-        gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, tilemapObjPath, tilemapObjName, itemObjPath);
+        gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, alphaTexInfoPath, alphaTexInfoName, tilemapObjPath, tilemapObjName, itemObjPath, alphaTexObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }
     void Update()

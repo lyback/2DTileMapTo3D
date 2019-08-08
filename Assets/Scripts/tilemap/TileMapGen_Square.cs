@@ -40,6 +40,7 @@ public class TileMapGen_Square : TileMapGenBase
         m_itemmapInfo = new ItemMapInfo[x, y];
         m_tilemapInfoIsInit = new bool[x, y];
         m_itemmapInfoIsInit = new bool[x, y];
+        m_alphaTexInfoIsInit = new bool[x, y];
     }
     public override void MoveTo(float x, float z)
     {

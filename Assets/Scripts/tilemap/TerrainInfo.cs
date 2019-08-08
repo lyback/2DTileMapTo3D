@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class TerrainInfo : ScriptableObject
 {
@@ -13,5 +10,5 @@ public class TerrainInfo : ScriptableObject
     public int SpiltMap_Y;
     public bool[] MapInfoList;
     public bool[] ItemInfoList;
-    public bool[] TerrainAphlaList;
+    public bool[] TerrainAlphaList;
 }

@@ -12,7 +12,7 @@ public class ExportMap : Editor
     static string TerrainLayerName = "Terrain";
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
-    static string TerrainAphlaLayerName = "TerrainAphla";
+    static string TerrainAlphaLayerName = "TerrainAlpha";
     static int SeaID = 8;
     static int m_MapSpiltSize_x = 80;
     static int m_MapSpiltSize_y = 80;
@@ -169,12 +169,12 @@ public class ExportMap : Editor
         UnityEditor.AssetDatabase.SaveAssets();
     }
 
-    [MenuItem("Map/ExportTerrainAphla")]
-    public static void ExportTerrainAphla()
+    [MenuItem("Map/ExportTerrainAlpha")]
+    public static void ExportTerrainAlpha()
     {
-        if (Directory.Exists(Application.dataPath + "/TileMap/TerrainAphla/"))
+        if (Directory.Exists(Application.dataPath + "/TileMap/TerrainAlpha/"))
         {
-            Directory.Delete(Application.dataPath + "/TileMap/TerrainAphla/", true);
+            Directory.Delete(Application.dataPath + "/TileMap/TerrainAlpha/", true);
         }
         //加载Map
         TiledMap map = LoadMap(m_MapName);
@@ -192,7 +192,7 @@ public class ExportMap : Editor
         terrainInfo.SpiltMapSize_H = spiltMap_h;
         terrainInfo.SpiltMap_X = m_MapSpiltSize_x;
         terrainInfo.SpiltMap_Y = m_MapSpiltSize_y;
-        terrainInfo.TerrainAphlaList = new bool[m_MapSpiltSize_x * m_MapSpiltSize_y];
+        terrainInfo.TerrainAlphaList = new bool[m_MapSpiltSize_x * m_MapSpiltSize_y];
 
         //物件分块数据
         Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
@@ -202,37 +202,37 @@ public class ExportMap : Editor
             string layerName = layer.name;
             _layerDic.Add(layerName, layer);
         }
-        var terrainAphlaTiles = _layerDic.ContainsKey(TerrainAphlaLayerName) ? _layerDic[TerrainAphlaLayerName].GetTiles() : null;
+        var terrainAlphaTiles = _layerDic.ContainsKey(TerrainAlphaLayerName) ? _layerDic[TerrainAlphaLayerName].GetTiles() : null;
         for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
         {
-            TiledLayerTile _terrainAphlaTile = new TiledLayerTile();
-            int _terrainAphlaID = 0;
-            int _terainAphlaRY = 0;
-            string _terrainAphlaName = "";
-            if (terrainAphlaTiles != null)
+            TiledLayerTile _terrainAlphaTile = new TiledLayerTile();
+            int _terrainAlphaID = 0;
+            int _terainAlphaRY = 0;
+            string _terrainAlphaName = "";
+            if (terrainAlphaTiles != null)
             {
-                _terrainAphlaTile = terrainAphlaTiles[i];
-                _terainAphlaRY = GetRotY(_terrainAphlaTile);
-                _terrainAphlaID = _terrainAphlaTile.Gid;
-                _terrainAphlaName = GetTilesetNameAndIndex(map, _terrainAphlaTile.Gid, out _terrainAphlaID);
+                _terrainAlphaTile = terrainAlphaTiles[i];
+                _terainAlphaRY = GetRotY(_terrainAlphaTile);
+                _terrainAlphaID = _terrainAlphaTile.Gid;
+                _terrainAlphaName = GetTilesetNameAndIndex(map, _terrainAlphaTile.Gid, out _terrainAlphaID);
             }
 
-            if (_terrainAphlaID == 1)
+            if (_terrainAlphaID == 1)
             {
-                int X = _terrainAphlaTile.X;
-                int Y = _terrainAphlaTile.Y;
+                int X = _terrainAlphaTile.X;
+                int Y = _terrainAlphaTile.Y;
 
                 int itemIndex_x = X / spiltMap_w;
                 int itemIndex_y = Y / spiltMap_h;
-                terrainInfo.TerrainAphlaList[itemIndex_x * m_MapSpiltSize_x + itemIndex_y] = true;
-                var _mapinfo = GetStriptableObject<TerrainAphlaInfo>(string.Format("Assets/TileMap/TerrainAphla/TerrainAphla_{0}_{1}.asset", itemIndex_x, itemIndex_y));
+                terrainInfo.TerrainAlphaList[itemIndex_x * m_MapSpiltSize_x + itemIndex_y] = true;
+                var _mapinfo = GetStriptableObject<AlphaTexInfo>(string.Format("Assets/TileMap/TerrainAlpha/TerrainAlpha_{0}_{1}.asset", itemIndex_x, itemIndex_y));
                 int _posIndex = Y * globalGridSizeX + X;
 
-                string itemName = _terrainAphlaName;
-                // objInfo.itemRotY = _terainAphlaRY;
+                string itemName = _terrainAlphaName;
+                // objInfo.itemRotY = _terainAlphaRY;
 
                 _mapinfo.posIndex.Add(_posIndex);
-                _mapinfo.terrainAphlaList.Add(itemName);
+                _mapinfo.terrainAlphaList.Add(itemName);
 
                 UnityEditor.EditorUtility.SetDirty(_mapinfo);
             }

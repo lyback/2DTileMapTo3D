@@ -11,8 +11,13 @@ public class TileMapGenHelperForLua
             m_TileMapGen.Init(data, v_count, h_count, itemEx_x, itemEx_y, offset_x, offset_y);
         }
     }
-    public static void SetResPath(string tileMapInfoPath, string tileMapInfoName, string itemInfoPath, string itemInfoName, string terrainObjPath, string terrainObjName, string itemObjPath){
-        m_TileMapGen.SetResPath(tileMapInfoPath, tileMapInfoName, itemInfoPath, itemInfoName, terrainObjPath, terrainObjName, itemObjPath);
+    public static void SetResPath(string tileMapInfoPath, string tileMapInfoName,
+     string itemInfoPath, string itemInfoName,
+     string alphaTexPath, string alphaTexName,
+     string terrainObjPath, string terrainObjName,
+     string itemObjPath,
+     string alphaTexObjPath){
+        m_TileMapGen.SetResPath(tileMapInfoPath, tileMapInfoName, itemInfoPath, itemInfoName, alphaTexPath, alphaTexName, terrainObjPath, terrainObjName, itemObjPath, alphaTexObjPath);
     }
     public static void MoveTo(float x, float z){
         m_TileMapGen.MoveTo(x, z);
