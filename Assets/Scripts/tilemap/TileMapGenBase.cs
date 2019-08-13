@@ -48,7 +48,7 @@ public class TileMapGenBase : MonoBehaviour
 
     protected Vector3 pos_temp = Vector3.zero;
     protected Vector3 rot_temp = new Vector3(0, -135, 0);
-    protected Vector3 hide_temp = new Vector3(0f, 1000f, 0f);
+    // protected Vector3 hide_temp = new Vector3(0f, 1000f, 0f);
     protected Transform tra_temp;
 
     string m_tilemapInfoPath = "";
@@ -309,7 +309,7 @@ public class TileMapGenBase : MonoBehaviour
         //地形
         if (!System.Object.ReferenceEquals(obj.ter, null))
         {
-            obj.ter.transform.localPosition = hide_temp;
+            // obj.ter.transform.localPosition = hide_temp;
             RecycleMapObj(obj.terIndex, obj.ter);
             m_visibleObj[i, j].ter = null;
             m_visibleObj[i, j].terIndex = -1;
@@ -332,7 +332,7 @@ public class TileMapGenBase : MonoBehaviour
         //透贴
         if (!System.Object.ReferenceEquals(obj.alphaTex,null))
         {
-            obj.alphaTex.transform.localPosition = hide_temp;
+            // obj.alphaTex.transform.localPosition = hide_temp;
             RecycleAlphaTexObj(obj.alphaTexName, obj.alphaTex);
             m_visibleObj[i, j].alphaTex = null;
             m_visibleObj[i, j].alphaTexName = "";
