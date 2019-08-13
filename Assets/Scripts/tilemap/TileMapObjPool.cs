@@ -7,25 +7,47 @@ public class TileMapObjPool
     Transform m_Parent;
     Queue<GameObject> m_ObjCache;
 
+    Vector3 pos_temp;
+
     public TileMapObjPool(GameObject prefab, Transform parent, int count)
     {
         m_ObjCache = new Queue<GameObject>(count);
         m_Prefab = prefab;
         m_Parent = parent;
     }
-    public GameObject Get()
+    public GameObject Get(int x, int z)
     {
+        GameObject obj;
         if (m_ObjCache.Count > 0)
         {
-            return m_ObjCache.Dequeue();
+            obj = m_ObjCache.Dequeue();
+            SetPos(obj, x, z, false);
+            return obj;
         }
-        var obj = GameObject.Instantiate(m_Prefab);
+        obj = GameObject.Instantiate(m_Prefab);
         obj.transform.SetParent(m_Parent);
+        SetPos(obj, x, z, true);
         return obj;
     }
     public void Recycle(GameObject obj)
     {
+        SetOutSidePos(obj);
         m_ObjCache.Enqueue(obj);
     }
 
+    void SetPos(GameObject obj, int x, int z, bool isFirst){
+        pos_temp = obj.transform.localPosition;
+        pos_temp.x = x;
+        if (!isFirst)
+        {
+            pos_temp.y -= 1000;
+        }
+        pos_temp.z = z;
+        obj.transform.localPosition = pos_temp;
+    }
+    void SetOutSidePos(GameObject obj){
+        pos_temp = obj.transform.localPosition;
+        pos_temp.y += 1000;
+        obj.transform.localPosition = pos_temp;
+    }
 }

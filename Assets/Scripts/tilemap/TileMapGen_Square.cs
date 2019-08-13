@@ -90,6 +90,7 @@ public class TileMapGen_Square : TileMapGenBase
             }
         }
         pos_temp.x = start_x;
+        pos_temp.y = 0f;
         pos_temp.z = start_z;
         Root.position = pos_temp;
     }

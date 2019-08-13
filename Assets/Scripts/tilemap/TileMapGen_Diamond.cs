@@ -117,7 +117,15 @@ public class TileMapGen_Diamond : TileMapGenBase
             b = !b;
         }
         pos_temp.x = start_x;
+        pos_temp.y = 0f;
         pos_temp.z = start_z;
         Root.position = pos_temp;
+    }
+
+    protected override void GetItemPosByIndex(int i, int j, out int x, out int z){
+        int v_center_x = (i)/2 + 1;
+        int v_center_z = (i+1)/2;
+        x = v_center_x - j + m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter;
+        z = v_center_z + j - m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter;
     }
 }

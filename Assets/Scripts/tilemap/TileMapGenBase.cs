@@ -68,6 +68,10 @@ public class TileMapGenBase : MonoBehaviour
     public virtual void MoveTo(float x, float z)
     {
     }
+    protected virtual void GetItemPosByIndex(int i, int j, out int x, out int z){
+        x = 0;
+        z = 0;
+    }
     public void SetResPath(string tileMapInfoPath, string tileMapInfoName,
      string itemInfoPath, string itemInfoName,
      string alphaTexPath, string alphaTexName,
@@ -193,34 +197,35 @@ public class TileMapGenBase : MonoBehaviour
     {
         var _visibleObj = m_visibleObj[i, j];
         int terIndex = m_needVisibleTer[i, j].terIndex;
-        // int terRotY = m_needVisibleObj[i, j].terRotY;
+        // int terRotY = m_needVisibleTer[i, j].terRotY;
         //地形
         var _terObject = _visibleObj.ter;
-        pos_temp.x = posx;
-        pos_temp.z = posz;
+        // pos_temp.x = posx;
+        // pos_temp.y = 0f;
+        // pos_temp.z = posz;
         // rot_temp.y = terRotY - 135;
 
         if (!System.Object.ReferenceEquals(_terObject, null))
         {
-            tra_temp = _terObject.transform;
+            // tra_temp = _terObject.transform;
             if (_visibleObj.terIndex == terIndex)
             {
-                tra_temp.localPosition = pos_temp;
-                tra_temp.localEulerAngles = rot_temp;
+                // tra_temp.localPosition = pos_temp;
+                // tra_temp.localEulerAngles = rot_temp;
                 return;
             }
-            tra_temp.localPosition = hide_temp;
+            // tra_temp.localPosition = hide_temp;
             RecycleMapObj(_visibleObj.terIndex, _terObject);
         }
 
         m_visibleObj[i, j].terIndex = terIndex;
-        m_visibleObj[i, j].ter = GetMapObjFromPool(terIndex);
+        m_visibleObj[i, j].ter = GetMapObjFromPool(terIndex, posx, posz);
         _visibleObj = m_visibleObj[i, j];
         _terObject = _visibleObj.ter;
         if (!System.Object.ReferenceEquals(_terObject, null))
         {
             tra_temp = _terObject.transform;
-            tra_temp.localPosition = pos_temp;
+            // tra_temp.localPosition = pos_temp;
             tra_temp.localEulerAngles = rot_temp;
         }
     }
@@ -230,34 +235,37 @@ public class TileMapGenBase : MonoBehaviour
         string itemName = m_needVisibleItem[i, j].itemName;
         // int itemRotY = m_needVisibleObj[i, j].itemRotY;
 
-        pos_temp.x = posx;
-        pos_temp.z = posz;
         //物件
         var _itemObject = _visibleObj.item;
+        // pos_temp.x = posx;
+        // pos_temp.z = posz;
 
         if (!System.Object.ReferenceEquals(_itemObject, null))
         {
-            tra_temp = _itemObject.transform;
+            // tra_temp = _itemObject.transform;
+            // pos_temp.y = tra_temp.localPosition.y;
             if (_visibleObj.itemName == itemName)
             {
-                tra_temp.localPosition = pos_temp;
+                // tra_temp.localPosition = pos_temp;
                 // tra_temp.localEulerAngles = rot_temp;
                 return;
             }
-            tra_temp.localPosition = hide_temp;
             RecycleItemObj(_visibleObj.itemName, _itemObject);
         }
 
         m_visibleObj[i, j].itemName = itemName;
-        m_visibleObj[i, j].item = GetItemObjFromPool(itemName);
-        _visibleObj = m_visibleObj[i, j];
-        _itemObject = _visibleObj.item;
-        if (!System.Object.ReferenceEquals(_itemObject, null))
-        {
-            tra_temp = _itemObject.transform;
-            tra_temp.localPosition = pos_temp;
-            // tra_temp.localEulerAngles = rot_temp;
-        }
+        m_visibleObj[i, j].item = GetItemObjFromPool(itemName, posx, posz);
+        // _visibleObj = m_visibleObj[i, j];
+        // _itemObject = _visibleObj.item;
+        // if (!System.Object.ReferenceEquals(_itemObject, null))
+        // {
+        //     tra_temp = _itemObject.transform;
+        //     // pos_temp.x += tra_temp.localPosition.x;
+        //     pos_temp.y = tra_temp.localPosition.y;
+        //     // pos_temp.z += tra_temp.localPosition.z;
+        //     tra_temp.localPosition = pos_temp;
+        //     // tra_temp.localEulerAngles = rot_temp;
+        // }
     }
     protected void SetVisibleAlphaTex(int i, int j, int posx, int posz)
     {
@@ -265,34 +273,35 @@ public class TileMapGenBase : MonoBehaviour
         string alphaTexName = m_needVisibleAlphaTex[i, j].itemName;
         // int itemRotY = m_needVisibleObj[i, j].itemRotY;
 
-        pos_temp.x = posx;
-        pos_temp.z = posz;
+        // pos_temp.x = posx;
+        // pos_temp.y = 0.01f;
+        // pos_temp.z = posz;
         //透贴
         var _alphaTexObject = _visibleObj.alphaTex;
 
         if (!System.Object.ReferenceEquals(_alphaTexObject, null))
         {
-            tra_temp = _alphaTexObject.transform;
+            // tra_temp = _alphaTexObject.transform;
             if (_visibleObj.alphaTexName == alphaTexName)
             {
-                tra_temp.localPosition = pos_temp;
+                // tra_temp.localPosition = pos_temp;
                 // tra_temp.localEulerAngles = rot_temp;
                 return;
             }
-            tra_temp.localPosition = hide_temp;
+            // tra_temp.localPosition = hide_temp;
             RecycleAlphaTexObj(_visibleObj.itemName, _alphaTexObject);
         }
 
         m_visibleObj[i, j].alphaTexName = alphaTexName;
-        m_visibleObj[i, j].alphaTex = GetAlphaTexObjFromPool(alphaTexName);
-        _visibleObj = m_visibleObj[i, j];
-        _alphaTexObject = _visibleObj.alphaTex;
-        if (!System.Object.ReferenceEquals(_alphaTexObject, null))
-        {
-            tra_temp = _alphaTexObject.transform;
-            tra_temp.localPosition = pos_temp;
-            // tra_temp.localEulerAngles = rot_temp;
-        }
+        m_visibleObj[i, j].alphaTex = GetAlphaTexObjFromPool(alphaTexName, posx, posz);
+        // _visibleObj = m_visibleObj[i, j];
+        // _alphaTexObject = _visibleObj.alphaTex;
+        // if (!System.Object.ReferenceEquals(_alphaTexObject, null))
+        // {
+        //     tra_temp = _alphaTexObject.transform;
+        //     tra_temp.localPosition = pos_temp;
+        //     // tra_temp.localEulerAngles = rot_temp;
+        // }
     }
     protected void SetVisibleTerNUll(int i, int j)
     {
@@ -312,7 +321,6 @@ public class TileMapGenBase : MonoBehaviour
         //物件
         if (!System.Object.ReferenceEquals(obj.item,null))
         {
-            obj.item.transform.localPosition = hide_temp;
             RecycleItemObj(obj.itemName, obj.item);
             m_visibleObj[i, j].item = null;
             m_visibleObj[i, j].itemName = "";
@@ -330,7 +338,7 @@ public class TileMapGenBase : MonoBehaviour
             m_visibleObj[i, j].alphaTexName = "";
         }
     }
-    GameObject GetMapObjFromPool(int index)
+    GameObject GetMapObjFromPool(int index, int x, int z)
     {
         if (index == 0)
         {
@@ -339,17 +347,17 @@ public class TileMapGenBase : MonoBehaviour
         TileMapObjPool pool;
         if (m_terPoolDic.TryGetValue(index, out pool))
         {
-            return pool.Get();
+            return pool.Get(x, z);
         }
         pool = new TileMapObjPool(GetTerrainObj(index), TerRoot, m_visiablehalfCount);
         m_terPoolDic.Add(index, pool);
-        return pool.Get();
+        return pool.Get(x, z);
     }
     void RecycleMapObj(int index, GameObject obj)
     {
         m_terPoolDic[index].Recycle(obj);
     }
-    GameObject GetItemObjFromPool(string name)
+    GameObject GetItemObjFromPool(string name, int x, int z)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -358,17 +366,17 @@ public class TileMapGenBase : MonoBehaviour
         TileMapObjPool pool;
         if (m_itemPoolDic.TryGetValue(name, out pool))
         {
-            return pool.Get();
+            return pool.Get(x, z);
         }
         pool = new TileMapObjPool(GetItemObj(name), ItemRoot, m_visiablehalfCount);
         m_itemPoolDic.Add(name, pool);
-        return pool.Get();
+        return pool.Get(x, z);
     }
     void RecycleItemObj(string name, GameObject obj)
     {
         m_itemPoolDic[name].Recycle(obj);
     }
-    GameObject GetAlphaTexObjFromPool(string name)
+    GameObject GetAlphaTexObjFromPool(string name, int x, int z)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -377,11 +385,11 @@ public class TileMapGenBase : MonoBehaviour
         TileMapObjPool pool;
         if (m_alphaTexPoolDic.TryGetValue(name, out pool))
         {
-            return pool.Get();
+            return pool.Get(x, z);
         }
         pool = new TileMapObjPool(GetAlphaTexObj(name), ItemRoot, m_visiablehalfCount);
         m_alphaTexPoolDic.Add(name, pool);
-        return pool.Get();
+        return pool.Get(x, z);
     }
     void RecycleAlphaTexObj(string name, GameObject obj)
     {
