@@ -20,10 +20,12 @@ public class ExportMap : Editor
     [MenuItem("Map/ExportTerrain")]
     public static void ExportTerrain()
     {
+    　　System.DateTime beforDT = System.DateTime.Now;
         if (Directory.Exists(Application.dataPath + "/TileMap/MapInfo/"))
         {
             Directory.Delete(Application.dataPath + "/TileMap/MapInfo/", true);
         }
+        Directory.CreateDirectory(Application.dataPath + "/TileMap/MapInfo/");
         //加载Map
         TiledMap map = LoadMap(m_MapName);
 
@@ -55,10 +57,12 @@ public class ExportMap : Editor
         if (_layerDic.ContainsKey(TerrainLayerName))
         {
             var terrainTiles = _layerDic[TerrainLayerName].GetTiles();
+            int globalSize = terrainTiles.Length;
             for (int j = 0; j < terrainTiles.Length; j++)
             {
+                EditorUtility.DisplayProgressBar("ExportTerrain", j+"/"+(globalSize), j / (float)globalSize);
                 var _terrTile = terrainTiles[j];
-                int _terrRY = GetRotY(_terrTile);
+                // int _terrRY = GetRotY(_terrTile);
                 int terrainID = _terrTile.Gid;
                 GetTilesetNameAndIndex(map, _terrTile.Gid, out terrainID);
 
@@ -76,21 +80,29 @@ public class ExportMap : Editor
                     _mapinfo.posIndex.Add(_posIndex);
                     _mapinfo.terrainIndexList.Add(terrainIndex);
 
-                    UnityEditor.EditorUtility.SetDirty(_mapinfo);
+                    // UnityEditor.EditorUtility.SetDirty(_mapinfo);
                 }
             }
         }
 
-        UnityEditor.EditorUtility.SetDirty(terrainInfo);
+    　　System.DateTime afterDT = System.DateTime.Now;
+    　　System.TimeSpan ts = afterDT.Subtract(beforDT);
+        Debug.Log(ts.TotalSeconds);
+        EditorUtility.ClearProgressBar();
+        // UnityEditor.EditorUtility.SetDirty(terrainInfo);
+        CleanSOCache();
         UnityEditor.AssetDatabase.SaveAssets();
+
     }
     [MenuItem("Map/ExportObj")]
     public static void ExportObj()
     {
+    　　System.DateTime beforDT = System.DateTime.Now;
         if (Directory.Exists(Application.dataPath + "/TileMap/ItemInfo/"))
         {
             Directory.Delete(Application.dataPath + "/TileMap/ItemInfo/", true);
         }
+        Directory.CreateDirectory(Application.dataPath + "/TileMap/ItemInfo/");
         //加载Map
         TiledMap map = LoadMap(m_MapName);
         var globalGridSizeX = map.width;
@@ -119,27 +131,29 @@ public class ExportMap : Editor
         }
         var unRemoveTiles = _layerDic.ContainsKey(UnRemovableItemLayerName) ? _layerDic[UnRemovableItemLayerName].GetTiles() : null;
         var removableTiles = _layerDic.ContainsKey(RemovableItemLayerName) ? _layerDic[RemovableItemLayerName].GetTiles() : null;
-        for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
+        int globalSize = globalGridSizeX * globalGridSizeZ;
+        for (int i = 0; i < globalSize; i++)
         {
+            // EditorUtility.DisplayProgressBar("ExportObj", i+"/"+(globalSize), i / (float)globalSize);
             TiledLayerTile _unRemoveTile = new TiledLayerTile();
             int _unRemoveID = 0;
-            int _unRemoveRY = 0;
+            // int _unRemoveRY = 0;
             string _unRemoveName = "";
             if (unRemoveTiles != null)
             {
                 _unRemoveTile = unRemoveTiles[i];
-                _unRemoveRY = GetRotY(_unRemoveTile);
+                // _unRemoveRY = GetRotY(_unRemoveTile);
                 _unRemoveID = _unRemoveTile.Gid;
                 _unRemoveName = GetTilesetNameAndIndex(map, _unRemoveTile.Gid, out _unRemoveID);
             }
             TiledLayerTile _removableTile = new TiledLayerTile();
             int _removableID = 0;
-            int _removableRY = 0;
+            // int _removableRY = 0;
             string _removableName = "";
             if (removableTiles != null)
             {
                 _removableTile = removableTiles[i];
-                _removableRY = GetRotY(_removableTile);
+                // _removableRY = GetRotY(_removableTile);
                 _removableID = _removableTile.Gid;
                 _removableName = GetTilesetNameAndIndex(map, _removableTile.Gid, out _removableID);
             }
@@ -161,21 +175,30 @@ public class ExportMap : Editor
                 _mapinfo.posIndex.Add(_posIndex);
                 _mapinfo.itemNameList.Add(itemName);
 
-                UnityEditor.EditorUtility.SetDirty(_mapinfo);
+                // UnityEditor.EditorUtility.SetDirty(_mapinfo);
             }
         }
 
-        UnityEditor.EditorUtility.SetDirty(terrainInfo);
+    　　System.DateTime afterDT = System.DateTime.Now;
+    　　System.TimeSpan ts = afterDT.Subtract(beforDT);
+        Debug.Log(ts.TotalSeconds);
+        EditorUtility.ClearProgressBar();
+        // UnityEditor.EditorUtility.SetDirty(terrainInfo);
+        CleanSOCache();
         UnityEditor.AssetDatabase.SaveAssets();
+
     }
 
     [MenuItem("Map/ExportTerrainAlpha")]
     public static void ExportTerrainAlpha()
     {
+    　　System.DateTime beforDT = System.DateTime.Now;
+  
         if (Directory.Exists(Application.dataPath + "/TileMap/TerrainAlpha/"))
         {
             Directory.Delete(Application.dataPath + "/TileMap/TerrainAlpha/", true);
         }
+        Directory.CreateDirectory(Application.dataPath + "/TileMap/TerrainAlpha/");
         //加载Map
         TiledMap map = LoadMap(m_MapName);
         var globalGridSizeX = map.width;
@@ -203,16 +226,18 @@ public class ExportMap : Editor
             _layerDic.Add(layerName, layer);
         }
         var terrainAlphaTiles = _layerDic.ContainsKey(TerrainAlphaLayerName) ? _layerDic[TerrainAlphaLayerName].GetTiles() : null;
-        for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
+        int globalSize = globalGridSizeX * globalGridSizeZ;
+        for (int i = 0; i < globalSize; i++)
         {
+            // EditorUtility.DisplayProgressBar("ExportTerrainAlpha", i+"/"+(globalSize), i / (float)globalSize);
             TiledLayerTile _terrainAlphaTile = new TiledLayerTile();
             int _terrainAlphaID = 0;
-            int _terainAlphaRY = 0;
+            // int _terainAlphaRY = 0;
             string _terrainAlphaName = "";
             if (terrainAlphaTiles != null)
             {
                 _terrainAlphaTile = terrainAlphaTiles[i];
-                _terainAlphaRY = GetRotY(_terrainAlphaTile);
+                // _terainAlphaRY = GetRotY(_terrainAlphaTile);
                 _terrainAlphaID = _terrainAlphaTile.Gid;
                 _terrainAlphaName = GetTilesetNameAndIndex(map, _terrainAlphaTile.Gid, out _terrainAlphaID);
             }
@@ -234,12 +259,18 @@ public class ExportMap : Editor
                 _mapinfo.posIndex.Add(_posIndex);
                 _mapinfo.terrainAlphaList.Add(itemName);
 
-                UnityEditor.EditorUtility.SetDirty(_mapinfo);
+                // UnityEditor.EditorUtility.SetDirty(_mapinfo);
             }
         }
 
-        UnityEditor.EditorUtility.SetDirty(terrainInfo);
+    　　System.DateTime afterDT = System.DateTime.Now;
+    　　System.TimeSpan ts = afterDT.Subtract(beforDT);
+        Debug.Log(ts.TotalSeconds);
+        EditorUtility.ClearProgressBar();
+
+        CleanSOCache();
         UnityEditor.AssetDatabase.SaveAssets();
+
     }
 
     [MenuItem("Map/ExportServerData")]
@@ -360,18 +391,31 @@ public class ExportMap : Editor
         }
         return 0;
     }
+    static Dictionary<string, ScriptableObject> m_SOCache = new Dictionary<string, ScriptableObject>();
     static T GetStriptableObject<T>(string path) where T : ScriptableObject
     {
-        T asset = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);
-        if (!Directory.Exists(Path.GetDirectoryName(path)))
+        ScriptableObject asset;
+        if (!m_SOCache.TryGetValue(path, out asset))
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            asset = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null)
+            {
+                asset = ScriptableObject.CreateInstance<T>();
+                UnityEditor.AssetDatabase.CreateAsset(asset, path);
+            }
+            m_SOCache.Add(path, asset);
         }
-        if (asset == null)
+        return asset as T;
+    }
+    static void CleanSOCache(){
+        SetDirtySOCache();
+        m_SOCache.Clear();
+        System.GC.Collect();
+    }
+    static void SetDirtySOCache(){
+        foreach (var item in m_SOCache)
         {
-            asset = ScriptableObject.CreateInstance<T>();
-            UnityEditor.AssetDatabase.CreateAsset(asset, path);
+            UnityEditor.EditorUtility.SetDirty(item.Value);
         }
-        return asset;
     }
 }

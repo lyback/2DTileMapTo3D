@@ -48,7 +48,6 @@ public class TileMapGenBase : MonoBehaviour
 
     protected Vector3 pos_temp = Vector3.zero;
     protected Vector3 rot_temp = new Vector3(0, -135, 0);
-    // protected Vector3 hide_temp = new Vector3(0f, 1000f, 0f);
     protected Transform tra_temp;
 
     string m_tilemapInfoPath = "";
@@ -197,24 +196,15 @@ public class TileMapGenBase : MonoBehaviour
     {
         var _visibleObj = m_visibleObj[i, j];
         int terIndex = m_needVisibleTer[i, j].terIndex;
-        // int terRotY = m_needVisibleTer[i, j].terRotY;
+
         //地形
         var _terObject = _visibleObj.ter;
-        // pos_temp.x = posx;
-        // pos_temp.y = 0f;
-        // pos_temp.z = posz;
-        // rot_temp.y = terRotY - 135;
-
         if (!System.Object.ReferenceEquals(_terObject, null))
         {
-            // tra_temp = _terObject.transform;
             if (_visibleObj.terIndex == terIndex)
             {
-                // tra_temp.localPosition = pos_temp;
-                // tra_temp.localEulerAngles = rot_temp;
                 return;
             }
-            // tra_temp.localPosition = hide_temp;
             RecycleMapObj(_visibleObj.terIndex, _terObject);
         }
 
@@ -225,7 +215,6 @@ public class TileMapGenBase : MonoBehaviour
         if (!System.Object.ReferenceEquals(_terObject, null))
         {
             tra_temp = _terObject.transform;
-            // tra_temp.localPosition = pos_temp;
             tra_temp.localEulerAngles = rot_temp;
         }
     }
@@ -233,21 +222,13 @@ public class TileMapGenBase : MonoBehaviour
     {
         var _visibleObj = m_visibleObj[i, j];
         string itemName = m_needVisibleItem[i, j].itemName;
-        // int itemRotY = m_needVisibleObj[i, j].itemRotY;
 
         //物件
         var _itemObject = _visibleObj.item;
-        // pos_temp.x = posx;
-        // pos_temp.z = posz;
-
         if (!System.Object.ReferenceEquals(_itemObject, null))
         {
-            // tra_temp = _itemObject.transform;
-            // pos_temp.y = tra_temp.localPosition.y;
             if (_visibleObj.itemName == itemName)
             {
-                // tra_temp.localPosition = pos_temp;
-                // tra_temp.localEulerAngles = rot_temp;
                 return;
             }
             RecycleItemObj(_visibleObj.itemName, _itemObject);
@@ -255,53 +236,26 @@ public class TileMapGenBase : MonoBehaviour
 
         m_visibleObj[i, j].itemName = itemName;
         m_visibleObj[i, j].item = GetItemObjFromPool(itemName, posx, posz);
-        // _visibleObj = m_visibleObj[i, j];
-        // _itemObject = _visibleObj.item;
-        // if (!System.Object.ReferenceEquals(_itemObject, null))
-        // {
-        //     tra_temp = _itemObject.transform;
-        //     // pos_temp.x += tra_temp.localPosition.x;
-        //     pos_temp.y = tra_temp.localPosition.y;
-        //     // pos_temp.z += tra_temp.localPosition.z;
-        //     tra_temp.localPosition = pos_temp;
-        //     // tra_temp.localEulerAngles = rot_temp;
-        // }
     }
     protected void SetVisibleAlphaTex(int i, int j, int posx, int posz)
     {
         var _visibleObj = m_visibleObj[i, j];
         string alphaTexName = m_needVisibleAlphaTex[i, j].itemName;
-        // int itemRotY = m_needVisibleObj[i, j].itemRotY;
 
-        // pos_temp.x = posx;
-        // pos_temp.y = 0.01f;
-        // pos_temp.z = posz;
         //透贴
         var _alphaTexObject = _visibleObj.alphaTex;
-
         if (!System.Object.ReferenceEquals(_alphaTexObject, null))
         {
-            // tra_temp = _alphaTexObject.transform;
             if (_visibleObj.alphaTexName == alphaTexName)
             {
-                // tra_temp.localPosition = pos_temp;
-                // tra_temp.localEulerAngles = rot_temp;
                 return;
             }
-            // tra_temp.localPosition = hide_temp;
-            RecycleAlphaTexObj(_visibleObj.itemName, _alphaTexObject);
+            RecycleAlphaTexObj(_visibleObj.alphaTexName, _alphaTexObject);
         }
 
         m_visibleObj[i, j].alphaTexName = alphaTexName;
         m_visibleObj[i, j].alphaTex = GetAlphaTexObjFromPool(alphaTexName, posx, posz);
-        // _visibleObj = m_visibleObj[i, j];
-        // _alphaTexObject = _visibleObj.alphaTex;
-        // if (!System.Object.ReferenceEquals(_alphaTexObject, null))
-        // {
-        //     tra_temp = _alphaTexObject.transform;
-        //     tra_temp.localPosition = pos_temp;
-        //     // tra_temp.localEulerAngles = rot_temp;
-        // }
+
     }
     protected void SetVisibleTerNUll(int i, int j)
     {
@@ -309,7 +263,6 @@ public class TileMapGenBase : MonoBehaviour
         //地形
         if (!System.Object.ReferenceEquals(obj.ter, null))
         {
-            // obj.ter.transform.localPosition = hide_temp;
             RecycleMapObj(obj.terIndex, obj.ter);
             m_visibleObj[i, j].ter = null;
             m_visibleObj[i, j].terIndex = -1;
@@ -332,7 +285,6 @@ public class TileMapGenBase : MonoBehaviour
         //透贴
         if (!System.Object.ReferenceEquals(obj.alphaTex,null))
         {
-            // obj.alphaTex.transform.localPosition = hide_temp;
             RecycleAlphaTexObj(obj.alphaTexName, obj.alphaTex);
             m_visibleObj[i, j].alphaTex = null;
             m_visibleObj[i, j].alphaTexName = "";
@@ -484,10 +436,6 @@ public class TileMapGenBase : MonoBehaviour
                 alphaTex.Init();
                 m_alphaTexInfo[w, h] = alphaTex;
             }
-            else
-            {
-                Debug.Log(name);
-            }
             m_alphaTexInfoIsInit[w, h] = true;
 #else
             LoadManager.Instance.LoadAsset(m_alphaTexPath, name, "asset", typeof(AlphaTexInfo), (data) =>
@@ -513,7 +461,12 @@ public class TileMapGenBase : MonoBehaviour
             string name = string.Format(m_terrainObjName, index);
 #if TILEMAP_TEST
             obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_terrainObjPath, name));
-            m_terrainObjRef.Add(index, obj);
+            m_terrainObjRef.Add(index, obj);     
+            if (obj == null)
+            {
+                obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TileMap/TileMapObj/Prefab/Error.prefab");
+                Debug.LogError("GetTerrainObj:null:"+name);
+            }       
 #else
             LoadManager.Instance.LoadAsset(m_terrainObjPath, name, "prefab", typeof(GameObject), (data) =>
             {
@@ -533,6 +486,11 @@ public class TileMapGenBase : MonoBehaviour
 #if TILEMAP_TEST
             obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_itemObjPath, name));
             m_itemObjRef.Add(name, obj);
+            if (obj == null)
+            {
+                obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TileMap/TileMapObj/Prefab/Error.prefab");
+                Debug.LogError("GetItemObj:null:"+name);
+            }
 #else
             LoadManager.Instance.LoadAsset(m_itemObjPath, name, "prefab", typeof(GameObject), (data) =>
             {
@@ -551,6 +509,11 @@ public class TileMapGenBase : MonoBehaviour
 #if TILEMAP_TEST
             obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_alphaTexObjPath, name));
             m_alphaTexObjRef.Add(name, obj);
+            if (obj == null)
+            {
+                obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TileMap/TileMapObj/Prefab/Error.prefab");
+                Debug.LogError("GetAlphaTexObj:null:"+name);
+            }
 #else
             LoadManager.Instance.LoadAsset(m_alphaTexObjPath, name, "prefab", typeof(GameObject), (data) =>
             {

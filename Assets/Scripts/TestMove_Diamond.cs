@@ -9,8 +9,8 @@ public class TestMove_Diamond : MonoBehaviour
 {
     public int moveSpeed = 1;
     public TileMapGenBase gen;
-    public int size_W = 8;
-    public int size_H = 30;
+    public int size_W = 100;
+    public int size_H = 100;
     void Start()
     {
         var terrainInfo = AssetDatabase.LoadAssetAtPath<TerrainInfo>(string.Format("Assets/TileMap/TerrainInfo.asset"));
