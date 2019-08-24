@@ -2,7 +2,7 @@ using UnityEngine;
 public class TileMapGenHelperForLua
 {
     static TileMapGenBase m_TileMapGen;
-
+    public static bool m_IsInit = false;
     public static void Init(Transform terrainRoot, object terrainInfo, int v_count, int h_count, int itemEx_x, int itemEx_y, float offset_x, float offset_y){
         m_TileMapGen = terrainRoot.GetComponent<TileMapGenBase>();
         if (m_TileMapGen)
@@ -10,6 +10,10 @@ public class TileMapGenHelperForLua
             var data = terrainInfo as TerrainInfo;
             m_TileMapGen.Init(data, v_count, h_count, itemEx_x, itemEx_y, offset_x, offset_y);
         }
+        m_IsInit = true;
+    }
+    public static void Dispose(){
+        m_IsInit = false;
     }
     public static void SetResPath(string tileMapInfoPath, string tileMapInfoName,
      string itemInfoPath, string itemInfoName,

@@ -377,7 +377,7 @@ public class TileMapGenBase : MonoBehaviour
                     m_tilemapInfo[w, h] = mapInfo;
                 }
                 m_tilemapInfoIsInit[w, h] = true;
-            }, false);
+            }, false, false, false, false);
 #endif
         }
         info = m_tilemapInfo[w, h];
@@ -412,7 +412,7 @@ public class TileMapGenBase : MonoBehaviour
                     m_itemmapInfo[w, h] = itemInfo;
                 }
                 m_itemmapInfoIsInit[w, h] = true;
-            }, false);
+            }, false, false, false, false);
 #endif
         }
         info = m_itemmapInfo[w, h];
@@ -447,7 +447,7 @@ public class TileMapGenBase : MonoBehaviour
                     m_alphaTexInfo[w, h] = alphaTex;
                 }
                 m_alphaTexInfoIsInit[w, h] = true;
-            }, false);
+            }, false, false, false, false);
 #endif
         }
         info = m_alphaTexInfo[w, h];
