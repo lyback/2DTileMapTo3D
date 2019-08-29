@@ -24,18 +24,20 @@ public class TileMapGenBase : MonoBehaviour
     protected int m_splitMap_X;
     protected int m_splitMap_Y;
     protected Vector2 m_offset;
+    protected bool m_forceMoveTo = false;
 
     protected VisiableObj[,] m_visibleObj;
     protected VisiableTerEx[,] m_needVisibleTer;
     protected VisiableItemEx[,] m_needVisibleItem;
     protected VisiableItemEx[,] m_needVisibleAlphaTex;
+    protected HashSet<int> m_hideItem;
     protected int m_itemSizeEx_x = 0;
     protected int m_itemSizeEx_x_Half = 0;
     protected int m_itemSizeEx_y = 0;
     protected int m_itemSizeEx_y_Half = 0;
     protected int m_itemSizeEx_y_Quarter = 0;
-    protected int m_visiableCount = 0;
-    protected int m_visiablehalfCount = 0;
+    protected int m_visiableCount_v;
+    protected int m_visiableCount_h;
     protected Dictionary<int, TileMapObjPool> m_terPoolDic = new Dictionary<int, TileMapObjPool>();
     protected Dictionary<int, GameObject> m_terrainObjRef = new Dictionary<int, GameObject>();
     protected Dictionary<string, TileMapObjPool> m_itemPoolDic = new Dictionary<string, TileMapObjPool>();
@@ -50,6 +52,7 @@ public class TileMapGenBase : MonoBehaviour
     protected Vector3 rot_temp = new Vector3(0, -135, 0);
     protected Transform tra_temp;
 
+    bool m_fullPath = false;
     string m_tilemapInfoPath = "";
     string m_tilemapInfoName = "";
     string m_itemInfoPath = "";
@@ -63,21 +66,64 @@ public class TileMapGenBase : MonoBehaviour
 
     public virtual void Init(TerrainInfo terrainInfo, int v_count, int h_count, int itemEx_x, int itemEx_y, float offset_x, float offset_y)
     {
+        m_terrainInfoAsset = terrainInfo;
+        m_offset = new Vector2(offset_x, offset_y);
+        m_visibleObj = new VisiableObj[h_count + itemEx_y, v_count + itemEx_x];
+        m_needVisibleTer = new VisiableTerEx[h_count + itemEx_y, v_count + itemEx_x];
+        m_needVisibleItem = new VisiableItemEx[h_count + itemEx_y, v_count + itemEx_x];
+        m_needVisibleAlphaTex = new VisiableItemEx[h_count + itemEx_y, v_count + itemEx_x];
+
+        m_itemSizeEx_x = itemEx_x;
+        m_itemSizeEx_x_Half = itemEx_x / 2;
+        m_itemSizeEx_y = itemEx_y;
+        m_itemSizeEx_y_Half = itemEx_y / 2;
+        m_itemSizeEx_y_Quarter = itemEx_y / 4;
+
+        m_visiableCount_v = v_count + itemEx_x;
+        m_visiableCount_h = h_count + itemEx_y;
+
+        TerRoot.localPosition = new Vector3(offset_x, 0, offset_y);
+        ItemRoot.localPosition = new Vector3(offset_x, 0, offset_y);
+
+
+        m_map_W = terrainInfo.MapSize_W;
+        m_map_H = terrainInfo.MapSize_H;
+        m_splitMap_X = terrainInfo.SpiltMap_X;
+        m_splitMap_Y = terrainInfo.SpiltMap_Y;
+
+        m_tilemap_W = terrainInfo.SpiltMapSize_W;
+        m_tilemap_H = terrainInfo.SpiltMapSize_H;
+        int x = Mathf.CeilToInt(m_map_W * 1f / m_tilemap_W);
+        int y = Mathf.CeilToInt(m_map_H * 1f / m_tilemap_H);
+        m_tilemapInfo = new TileMapInfo[x, y];
+        m_itemmapInfo = new ItemMapInfo[x, y];
+        m_alphaTexInfo = new AlphaTexInfo[x, y];
+        m_tilemapInfoIsInit = new bool[x, y];
+        m_itemmapInfoIsInit = new bool[x, y];
+        m_alphaTexInfoIsInit = new bool[x, y];
+
+        m_hideItem = new HashSet<int>();
     }
     public virtual void MoveTo(float x, float z)
     {
     }
-    protected virtual void GetItemPosByIndex(int i, int j, out int x, out int z){
-        x = 0;
-        z = 0;
+    public virtual void HideItemAtPos(int x, int z)
+    {
     }
-    public void SetResPath(string tileMapInfoPath, string tileMapInfoName,
+    public virtual void ShowItemAtPos(int x, int z)
+    {
+    }
+    public virtual void SetForceMoveTo(){
+        m_forceMoveTo = true;
+    }
+    public void SetResPath(bool fullPath, string tileMapInfoPath, string tileMapInfoName,
      string itemInfoPath, string itemInfoName,
      string alphaTexPath, string alphaTexName,
      string terrainObjPath, string terrainObjName,
      string itemObjPath,
      string alphaTexObjPath)
     {
+        m_fullPath = fullPath;
         m_tilemapInfoPath = tileMapInfoPath;
         m_tilemapInfoName = tileMapInfoName;
         m_itemInfoPath = itemInfoPath;
@@ -125,6 +171,13 @@ public class TileMapGenBase : MonoBehaviour
     }
     protected void CheckVisibleItem(int _pos_x, int _pos_z, int i, int j)
     {
+        int id = _pos_x * 10000 + _pos_z;
+        if (m_hideItem.Contains(id))
+        {
+            m_needVisibleItem[i, j].isShow = false;
+            SetVisibleItemNUll(i, j);
+            return;
+        }
         if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
         {
             m_needVisibleItem[i, j].isShow = false;
@@ -301,7 +354,7 @@ public class TileMapGenBase : MonoBehaviour
         {
             return pool.Get(x, z);
         }
-        pool = new TileMapObjPool(GetTerrainObj(index), TerRoot, m_visiablehalfCount);
+        pool = new TileMapObjPool(GetTerrainObj(index), TerRoot, m_visiableCount_h*m_visiableCount_v);
         m_terPoolDic.Add(index, pool);
         return pool.Get(x, z);
     }
@@ -311,6 +364,8 @@ public class TileMapGenBase : MonoBehaviour
     }
     GameObject GetItemObjFromPool(string name, int x, int z)
     {
+        float _x = x - 0.5f;
+        float _z = z - 0.5f;
         if (string.IsNullOrEmpty(name))
         {
             return null;
@@ -318,11 +373,11 @@ public class TileMapGenBase : MonoBehaviour
         TileMapObjPool pool;
         if (m_itemPoolDic.TryGetValue(name, out pool))
         {
-            return pool.Get(x, z);
+            return pool.Get(_x, _z);
         }
-        pool = new TileMapObjPool(GetItemObj(name), ItemRoot, m_visiablehalfCount);
+        pool = new TileMapObjPool(GetItemObj(name), ItemRoot, m_visiableCount_h*m_visiableCount_v);
         m_itemPoolDic.Add(name, pool);
-        return pool.Get(x, z);
+        return pool.Get(_x, _z);
     }
     void RecycleItemObj(string name, GameObject obj)
     {
@@ -339,7 +394,7 @@ public class TileMapGenBase : MonoBehaviour
         {
             return pool.Get(x, z);
         }
-        pool = new TileMapObjPool(GetAlphaTexObj(name), ItemRoot, m_visiablehalfCount);
+        pool = new TileMapObjPool(GetAlphaTexObj(name), ItemRoot, m_visiableCount_h*m_visiableCount_v);
         m_alphaTexPoolDic.Add(name, pool);
         return pool.Get(x, z);
     }
@@ -377,7 +432,7 @@ public class TileMapGenBase : MonoBehaviour
                     m_tilemapInfo[w, h] = mapInfo;
                 }
                 m_tilemapInfoIsInit[w, h] = true;
-            }, false, false, false, false);
+            }, false, false, false, m_fullPath);
 #endif
         }
         info = m_tilemapInfo[w, h];
@@ -412,7 +467,7 @@ public class TileMapGenBase : MonoBehaviour
                     m_itemmapInfo[w, h] = itemInfo;
                 }
                 m_itemmapInfoIsInit[w, h] = true;
-            }, false, false, false, false);
+            }, false, false, false, m_fullPath);
 #endif
         }
         info = m_itemmapInfo[w, h];
@@ -447,7 +502,7 @@ public class TileMapGenBase : MonoBehaviour
                     m_alphaTexInfo[w, h] = alphaTex;
                 }
                 m_alphaTexInfoIsInit[w, h] = true;
-            }, false, false, false, false);
+            }, false, false, false, m_fullPath);
 #endif
         }
         info = m_alphaTexInfo[w, h];

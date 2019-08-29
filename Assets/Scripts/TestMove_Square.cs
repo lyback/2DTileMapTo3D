@@ -28,7 +28,7 @@ public class TestMove_Square : MonoBehaviour
         string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/Item";
         string alphaTexObjPath = "Assets/TileMap/TileMapObj/Prefab/TerrainAlpha";
         gen.Init(terrainInfo, size_W, size_H, item_W, item_H, size_W/2-1, size_H/2-1);
-        gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, alphaTexInfoPath, alphaTexInfoName, tilemapObjPath, tilemapObjName, itemObjPath, alphaTexObjPath);
+        gen.SetResPath(false, tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, alphaTexInfoPath, alphaTexInfoName, tilemapObjPath, tilemapObjName, itemObjPath, alphaTexObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }
     void Update()

@@ -25,7 +25,7 @@ public class TestMove_Diamond : MonoBehaviour
         string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/Item";
         string alphaTexObjPath = "Assets/TileMap/TileMapObj/Prefab/TerrainAlpha";
         gen.Init(terrainInfo, size_W, size_H, 8, 8, 2.7f, -2.9f);
-        gen.SetResPath(tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, alphaTexInfoPath, alphaTexInfoName, tilemapObjPath, tilemapObjName, itemObjPath, alphaTexObjPath);
+        gen.SetResPath(false, tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, alphaTexInfoPath, alphaTexInfoName, tilemapObjPath, tilemapObjName, itemObjPath, alphaTexObjPath);
     }
     void Update()
     {

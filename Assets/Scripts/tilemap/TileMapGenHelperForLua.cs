@@ -15,16 +15,24 @@ public class TileMapGenHelperForLua
     public static void Dispose(){
         m_IsInit = false;
     }
-    public static void SetResPath(string tileMapInfoPath, string tileMapInfoName,
+    public static void SetResPath(bool fullPath, string tileMapInfoPath, string tileMapInfoName,
      string itemInfoPath, string itemInfoName,
      string alphaTexPath, string alphaTexName,
      string terrainObjPath, string terrainObjName,
      string itemObjPath,
      string alphaTexObjPath){
-        m_TileMapGen.SetResPath(tileMapInfoPath, tileMapInfoName, itemInfoPath, itemInfoName, alphaTexPath, alphaTexName, terrainObjPath, terrainObjName, itemObjPath, alphaTexObjPath);
+        m_TileMapGen.SetResPath(fullPath, tileMapInfoPath, tileMapInfoName, itemInfoPath, itemInfoName, alphaTexPath, alphaTexName, terrainObjPath, terrainObjName, itemObjPath, alphaTexObjPath);
     }
     public static void MoveTo(float x, float z){
         m_TileMapGen.MoveTo(x, z);
     }
-
+    public static void HideItemAtPos(int x, int z){
+        m_TileMapGen.HideItemAtPos(x,z);
+    }
+    public static void ShowItemAtPos(int x, int z){
+        m_TileMapGen.ShowItemAtPos(x,z);
+    }
+    public static void SetForceMoveTo(){
+        m_TileMapGen.SetForceMoveTo();
+    }
 }

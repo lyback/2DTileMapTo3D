@@ -12,8 +12,10 @@ public class ExportMap : Editor
     static string TerrainLayerName = "Terrain";
     static string RemovableItemLayerName = "RemovableItem";
     static string UnRemovableItemLayerName = "UnRemovableItem";
+    static string UnRemovableItemLayer_HName = "UnRemovableItemH";
     static string TerrainAlphaLayerName = "TerrainAlpha";
     static int SeaID = 8;
+    static HashSet<int> UnSetTerrain = new HashSet<int>{SeaID, };
     static int m_MapSpiltSize_x = 80;
     static int m_MapSpiltSize_y = 80;
 
@@ -66,7 +68,7 @@ public class ExportMap : Editor
                 int terrainID = _terrTile.Gid;
                 GetTilesetNameAndIndex(map, _terrTile.Gid, out terrainID);
 
-                if (terrainID != 0 && terrainID != SeaID)
+                if (terrainID != 0 && !UnSetTerrain.Contains(terrainID))
                 {
                     int mapIndex_x = _terrTile.X / spiltMap_w;
                     int mapIndex_y = _terrTile.Y / spiltMap_h;
@@ -304,7 +306,7 @@ public class ExportMap : Editor
                 _pos_z = globalGridSizeZ - unRemoveTiles[i].Y;
                 isUnRemove = true;
             }
-            else if (terrainTiles[i].Gid == SeaID)
+            else if (UnSetTerrain.Contains(terrainTiles[i].Gid))
             {
                 _pos_x = globalGridSizeX - terrainTiles[i].X;
                 _pos_z = globalGridSizeZ - terrainTiles[i].Y;
@@ -327,7 +329,111 @@ public class ExportMap : Editor
         Stream stream = File.Open(path, FileMode.Create);
         stream.Write(bytes, 0, bytes.Length);
         stream.Close();
+        Debug.Log("ExportServerdata Finish");
+    }
 
+    [MenuItem("Map/ExportClientData")]
+    public static void ExportClientdata()
+    {
+        //加载Map
+        TiledMap map = LoadMap(m_MapName);
+        var globalGridSizeX = map.width;
+        var globalGridSizeZ = map.height;
+        //计算map分块大小
+        int spiltMap_w = Mathf.CeilToInt(globalGridSizeX * 1f / m_MapSpiltSize_x);
+        int spiltMap_h = Mathf.CeilToInt(globalGridSizeZ * 1f / m_MapSpiltSize_y);
+        //物件分块数据
+        Dictionary<string, TiledLayer> _layerDic = new Dictionary<string, TiledLayer>();
+        for (int i = 0; i < map.layers.Length; i++)
+        {
+            var layer = map.layers[i];
+            string layerName = layer.name;
+            _layerDic.Add(layerName, layer);
+        }
+
+        var terrainTiles = _layerDic.ContainsKey(TerrainLayerName) ? _layerDic[TerrainLayerName].GetTiles() : null;
+        var unRemoveTiles = _layerDic.ContainsKey(UnRemovableItemLayerName) ? _layerDic[UnRemovableItemLayerName].GetTiles() : null;
+        // var removableTiles = _layerDic.ContainsKey(RemovableItemLayerName) ? _layerDic[RemovableItemLayerName].GetTiles() : null;
+        StringBuilder sb_AllSet = new StringBuilder();
+        StringBuilder[,] sb = new StringBuilder[m_MapSpiltSize_x,m_MapSpiltSize_y];
+        int[,] unSetCount = new int[m_MapSpiltSize_x,m_MapSpiltSize_y];
+        for (int i = 0; i < sb.GetLength(0); i++)
+        {
+            for (int j = 0; j < sb.GetLength(1); j++)
+            {
+                sb[i,j] = new StringBuilder();
+                sb[i,j].AppendFormat("local TileMapData_{0}_{1}",i,j);
+                sb[i,j].Append(" = {\n");
+            }
+        }
+        sb_AllSet.Append("local TileMapData_AllSet = {\n");
+        for (int i = 0; i < globalGridSizeX * globalGridSizeZ; i++)
+        {
+            int _pos_x = 0;
+            int _pos_z = 0;
+            bool isUnRemove = false;
+            if (unRemoveTiles[i].Gid != 0)
+            {
+                _pos_x = globalGridSizeX - unRemoveTiles[i].X;
+                _pos_z = globalGridSizeZ - unRemoveTiles[i].Y;
+                isUnRemove = true;
+            }
+            else if (UnSetTerrain.Contains(terrainTiles[i].Gid))
+            {
+                _pos_x = globalGridSizeX - terrainTiles[i].X;
+                _pos_z = globalGridSizeZ - terrainTiles[i].Y;
+                isUnRemove = true;
+            }
+            if (isUnRemove)
+            {
+                int temp = _pos_x;
+                _pos_x = _pos_z;
+                _pos_z = temp;
+                if (_pos_x == 164 && _pos_z == 600)
+                {
+                    Debug.Log("111");
+                }
+                int index_x = (_pos_x-1) / spiltMap_w;
+                int index_z = (_pos_z-1) / spiltMap_h;
+                int posIndex = _pos_x * 10000 + _pos_z;
+                sb[index_x,index_z].AppendFormat("[{0}] = true,\n", posIndex);
+                unSetCount[index_x,index_z]++;
+            }
+        }
+        for (int i = 0; i < sb.GetLength(0); i++)
+        {
+            for (int j = 0; j < sb.GetLength(1); j++)
+            {
+                if (unSetCount[i,j] == 0)
+                {
+                    sb_AllSet.AppendFormat("[\"{0}_{1}\"] = 1,\n", i, j);
+                    continue;
+                }
+                if (unSetCount[i,j] == spiltMap_w * spiltMap_h)
+                {
+                    sb_AllSet.AppendFormat("[\"{0}_{1}\"] = 2,\n", i, j);
+                    continue;
+                }
+
+                sb[i,j].Append("};\n");
+                sb[i,j].AppendFormat("return TileMapData_{0}_{1}",i,j);
+                string path = string.Format("{0}/TileMapClientData/tilemapdata_{1}_{2}.lua", Application.dataPath, i, j);
+                var bytes = System.Text.Encoding.UTF8.GetBytes(sb[i,j].ToString());
+                Stream stream = File.Open(path, FileMode.Create);
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+            }
+        }
+        sb_AllSet.Append("};\n");
+        sb_AllSet.AppendFormat("return TileMapData_AllSet");
+        string path_AllSet = string.Format("{0}/TileMapClientData/tilemapdata_allset.lua", Application.dataPath);
+        var bytes_AllSet = System.Text.Encoding.UTF8.GetBytes(sb_AllSet.ToString());
+        Stream stream_AllSet = File.Open(path_AllSet, FileMode.Create);
+        stream_AllSet.Write(bytes_AllSet, 0, bytes_AllSet.Length);
+        stream_AllSet.Close();
+
+        AssetDatabase.Refresh();
+        Debug.Log("ExportClientdata Finish");
     }
 
     private static TiledMap LoadMap(string assetName)

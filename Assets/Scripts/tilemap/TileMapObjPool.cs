@@ -15,7 +15,7 @@ public class TileMapObjPool
         m_Prefab = prefab;
         m_Parent = parent;
     }
-    public GameObject Get(int x, int z)
+    public GameObject Get(float x, float z)
     {
         GameObject obj;
         if (m_ObjCache.Count > 0)
@@ -35,7 +35,7 @@ public class TileMapObjPool
         m_ObjCache.Enqueue(obj);
     }
 
-    void SetPos(GameObject obj, int x, int z, bool isFirst){
+    void SetPos(GameObject obj, float x, float z, bool isFirst){
         pos_temp = obj.transform.localPosition;
         pos_temp.x = x;
         if (!isFirst)

@@ -9,55 +9,22 @@ public class TileMapGen_Diamond : TileMapGenBase
 {
     public override void Init(TerrainInfo terrainInfo, int v_count, int h_count, int itemEx_x, int itemEx_y, float offset_x, float offset_y)
     {
-        m_terrainInfoAsset = terrainInfo;
-        m_offset = new Vector2(offset_x, offset_y);
-        m_visibleObj = new VisiableObj[h_count + itemEx_y, v_count + itemEx_x];
-        m_needVisibleTer = new VisiableTerEx[h_count + itemEx_y, v_count + itemEx_x];
-        m_needVisibleItem = new VisiableItemEx[h_count + itemEx_y, v_count + itemEx_x];
-        m_needVisibleAlphaTex = new VisiableItemEx[h_count + itemEx_y, v_count + itemEx_x];
-
-        m_itemSizeEx_x = itemEx_x;
-        m_itemSizeEx_x_Half = itemEx_x / 2;
-        m_itemSizeEx_y = itemEx_y;
-        m_itemSizeEx_y_Half = itemEx_y / 2;
-        m_itemSizeEx_y_Quarter = itemEx_y / 4;
-
-        m_visiableCount = v_count * h_count;
-        m_visiablehalfCount = m_visiableCount / 2;
-
-        TerRoot.localPosition = new Vector3(offset_x, 0, offset_y);
-        ItemRoot.localPosition = new Vector3(offset_x, 0, offset_y);
-
-
-        m_map_W = terrainInfo.MapSize_W;
-        m_map_H = terrainInfo.MapSize_H;
-        m_splitMap_X = terrainInfo.SpiltMap_X;
-        m_splitMap_Y = terrainInfo.SpiltMap_Y;
-
-        m_tilemap_W = terrainInfo.SpiltMapSize_W;
-        m_tilemap_H = terrainInfo.SpiltMapSize_H;
-        int x = Mathf.CeilToInt(m_map_W * 1f / m_tilemap_W);
-        int y = Mathf.CeilToInt(m_map_H * 1f / m_tilemap_H);
-        m_tilemapInfo = new TileMapInfo[x, y];
-        m_itemmapInfo = new ItemMapInfo[x, y];
-        m_alphaTexInfo = new AlphaTexInfo[x, y];
-        m_tilemapInfoIsInit = new bool[x, y];
-        m_itemmapInfoIsInit = new bool[x, y];
-        m_alphaTexInfoIsInit = new bool[x, y];
+        base.Init(terrainInfo, v_count, h_count, itemEx_x, itemEx_y, offset_x, offset_y);
     }
     public override void MoveTo(float x, float z)
     {
         int start_x = Mathf.FloorToInt(x);
         int start_z = Mathf.FloorToInt(z);
-        if (start_x == m_lastPos_x && start_z == m_lastPos_z)
+        if (!m_forceMoveTo && (start_x == m_lastPos_x && start_z == m_lastPos_z))
         {
             return;
         }
         m_lastPos_x = start_x;
         m_lastPos_z = start_z;
+        m_forceMoveTo = false;
 
-        int h_count = m_visibleObj.GetLength(0);
-        int v_count = m_visibleObj.GetLength(1);
+        int h_count = m_visiableCount_h;
+        int v_count = m_visiableCount_v;
         bool b = true;
         int v_center_x = start_x;
         int v_center_z = start_z;
@@ -121,11 +88,38 @@ public class TileMapGen_Diamond : TileMapGenBase
         pos_temp.z = start_z;
         Root.position = pos_temp;
     }
-
-    protected override void GetItemPosByIndex(int i, int j, out int x, out int z){
-        int v_center_x = (i)/2 + 1;
-        int v_center_z = (i+1)/2;
-        x = v_center_x - j + m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter;
-        z = v_center_z + j - m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter;
+    public override void HideItemAtPos(int x, int z)
+    {
+        x = m_map_W - x;
+        z = m_map_H - z;
+        int temp = x;
+        x = z;
+        z = temp;
+        int id = x * 10000 + z;
+        // Debug.Log("TileMap:HideItemAtPos:" + x + "," + z);
+        if (!m_hideItem.Contains(id))
+        {
+            m_hideItem.Add(id);
+        }
     }
+    public override void ShowItemAtPos(int x, int z)
+    {
+        x = m_map_W - x;
+        z = m_map_H - z;
+        int temp = x;
+        x = z;
+        z = temp;
+        // Debug.Log("TileMap:ShowItemAtPos:" + x + "," + z);
+        int id = x * 10000 + z;
+        if (m_hideItem.Contains(id))
+        {
+            m_hideItem.Remove(id);
+        }
+    }
+    // protected override void GetItemPosByIndex(int i, int j, out int x, out int z){
+    //     int v_center_x = (i)/2 + 1;
+    //     int v_center_z = (i+1)/2;
+    //     x = v_center_x - j + m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter;
+    //     z = v_center_z + j - m_itemSizeEx_x_Half - m_itemSizeEx_y_Quarter;
+    // }
 }
