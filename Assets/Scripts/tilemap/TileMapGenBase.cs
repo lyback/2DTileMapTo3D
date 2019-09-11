@@ -10,6 +10,7 @@ public class TileMapGenBase : MonoBehaviour
     public Transform Root;                      // 场景根节点
     public Transform TerRoot;
     public Transform ItemRoot;
+    protected uint m_level = uint.MaxValue;
     protected TerrainInfo m_terrainInfoAsset;
     protected TileMapInfo[,] m_tilemapInfo;
     protected bool[,] m_tilemapInfoIsInit;
@@ -104,6 +105,10 @@ public class TileMapGenBase : MonoBehaviour
 
         m_hideItem = new HashSet<int>();
     }
+    public virtual void SetLevel(uint level)
+    {
+        m_level = level;
+    }
     public virtual void MoveTo(float x, float z)
     {
     }
@@ -113,7 +118,8 @@ public class TileMapGenBase : MonoBehaviour
     public virtual void ShowItemAtPos(int x, int z)
     {
     }
-    public virtual void SetForceMoveTo(){
+    public virtual void SetForceMoveTo()
+    {
         m_forceMoveTo = true;
     }
     public void SetResPath(bool fullPath, string tileMapInfoPath, string tileMapInfoName,
@@ -210,6 +216,7 @@ public class TileMapGenBase : MonoBehaviour
             SetVisibleItemNUll(i, j);
         }
     }
+    static AlphaTexInfo_S alphaTex_s;
     protected void CheckVisibleAlphaTex(int _pos_x, int _pos_z, int i, int j)
     {
         if (_pos_x >= m_map_W || _pos_x < 0 || _pos_z >= m_map_H || _pos_z < 0)
@@ -227,16 +234,16 @@ public class TileMapGenBase : MonoBehaviour
         int map_index = _pos_z * m_map_W + _pos_x;
 
         //透贴
-        string alphaTexName = null;
         bool hasAlphaTexObj = false;
         if (hasAlphaTexMapInfo)
         {
-            hasAlphaTexObj = _AlphaTexInfo.terrainAlphaDic.TryGetValue(map_index, out alphaTexName);
+            hasAlphaTexObj = _AlphaTexInfo.terrainAlphaDic.TryGetValue(map_index, out alphaTex_s);
+            hasAlphaTexObj = hasAlphaTexObj ? alphaTex_s.level <= m_level : hasAlphaTexObj;
         }
         if (hasAlphaTexObj)
         {
             m_needVisibleAlphaTex[i, j].isShow = true;
-            m_needVisibleAlphaTex[i, j].itemName = alphaTexName;
+            m_needVisibleAlphaTex[i, j].itemName = alphaTex_s.objName;
         }
         else
         {
@@ -325,7 +332,7 @@ public class TileMapGenBase : MonoBehaviour
     {
         var obj = m_visibleObj[i, j];
         //物件
-        if (!System.Object.ReferenceEquals(obj.item,null))
+        if (!System.Object.ReferenceEquals(obj.item, null))
         {
             RecycleItemObj(obj.itemName, obj.item);
             m_visibleObj[i, j].item = null;
@@ -336,7 +343,7 @@ public class TileMapGenBase : MonoBehaviour
     {
         var obj = m_visibleObj[i, j];
         //透贴
-        if (!System.Object.ReferenceEquals(obj.alphaTex,null))
+        if (!System.Object.ReferenceEquals(obj.alphaTex, null))
         {
             RecycleAlphaTexObj(obj.alphaTexName, obj.alphaTex);
             m_visibleObj[i, j].alphaTex = null;
@@ -354,7 +361,7 @@ public class TileMapGenBase : MonoBehaviour
         {
             return pool.Get(x, z);
         }
-        pool = new TileMapObjPool(GetTerrainObj(index), TerRoot, m_visiableCount_h*m_visiableCount_v);
+        pool = new TileMapObjPool(GetTerrainObj(index), TerRoot, m_visiableCount_h * m_visiableCount_v);
         m_terPoolDic.Add(index, pool);
         return pool.Get(x, z);
     }
@@ -375,7 +382,7 @@ public class TileMapGenBase : MonoBehaviour
         {
             return pool.Get(_x, _z);
         }
-        pool = new TileMapObjPool(GetItemObj(name), ItemRoot, m_visiableCount_h*m_visiableCount_v);
+        pool = new TileMapObjPool(GetItemObj(name), ItemRoot, m_visiableCount_h * m_visiableCount_v);
         m_itemPoolDic.Add(name, pool);
         return pool.Get(_x, _z);
     }
@@ -394,7 +401,7 @@ public class TileMapGenBase : MonoBehaviour
         {
             return pool.Get(x, z);
         }
-        pool = new TileMapObjPool(GetAlphaTexObj(name), ItemRoot, m_visiableCount_h*m_visiableCount_v);
+        pool = new TileMapObjPool(GetAlphaTexObj(name), ItemRoot, m_visiableCount_h * m_visiableCount_v);
         m_alphaTexPoolDic.Add(name, pool);
         return pool.Get(x, z);
     }
@@ -414,6 +421,7 @@ public class TileMapGenBase : MonoBehaviour
                 return false;
             }
             string name = string.Format(m_tilemapInfoName, w, h);
+#if UNITY_EDITOR
 #if TILEMAP_TEST
             var mapInfo = AssetDatabase.LoadAssetAtPath<TileMapInfo>(string.Format("{0}/{1}.asset", m_tilemapInfoPath, name));
             if (mapInfo != null)
@@ -434,6 +442,7 @@ public class TileMapGenBase : MonoBehaviour
                 m_tilemapInfoIsInit[w, h] = true;
             }, false, false, false, m_fullPath);
 #endif
+#endif
         }
         info = m_tilemapInfo[w, h];
         return m_terrainInfoAsset.MapInfoList[w * m_splitMap_X + h];
@@ -449,6 +458,7 @@ public class TileMapGenBase : MonoBehaviour
                 return false;
             }
             string name = string.Format(m_itemInfoName, w, h);
+#if UNITY_EDITOR
 #if TILEMAP_TEST
             var itemInfo = AssetDatabase.LoadAssetAtPath<ItemMapInfo>(string.Format("{0}/{1}.asset", m_itemInfoPath, name));
             if (itemInfo != null)
@@ -469,6 +479,7 @@ public class TileMapGenBase : MonoBehaviour
                 m_itemmapInfoIsInit[w, h] = true;
             }, false, false, false, m_fullPath);
 #endif
+#endif
         }
         info = m_itemmapInfo[w, h];
         return m_terrainInfoAsset.ItemInfoList[w * m_splitMap_X + h];
@@ -484,6 +495,7 @@ public class TileMapGenBase : MonoBehaviour
                 return false;
             }
             string name = string.Format(m_alphaTexName, w, h);
+#if UNITY_EDITOR
 #if TILEMAP_TEST
             var alphaTex = AssetDatabase.LoadAssetAtPath<AlphaTexInfo>(string.Format("{0}/{1}.asset", m_alphaTexPath, name));
             if (alphaTex != null)
@@ -504,6 +516,7 @@ public class TileMapGenBase : MonoBehaviour
                 m_alphaTexInfoIsInit[w, h] = true;
             }, false, false, false, m_fullPath);
 #endif
+#endif
         }
         info = m_alphaTexInfo[w, h];
         return m_terrainInfoAsset.TerrainAlphaList[w * m_splitMap_X + h];
@@ -514,20 +527,22 @@ public class TileMapGenBase : MonoBehaviour
         if (!m_terrainObjRef.TryGetValue(index, out obj))
         {
             string name = string.Format(m_terrainObjName, index);
+#if UNITY_EDITOR
 #if TILEMAP_TEST
             obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_terrainObjPath, name));
-            m_terrainObjRef.Add(index, obj);     
+            m_terrainObjRef.Add(index, obj);
             if (obj == null)
             {
                 obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TileMap/TileMapObj/Prefab/Error.prefab");
-                Debug.LogError("GetTerrainObj:null:"+name);
-            }       
+                Debug.LogError("GetTerrainObj:null:" + name);
+            }
 #else
             LoadManager.Instance.LoadAsset(m_terrainObjPath, name, "prefab", typeof(GameObject), (data) =>
             {
                 obj = data as GameObject;
                 m_terrainObjRef.Add(index, obj);
             }, false);
+#endif
 #endif
         }
         return obj;
@@ -538,13 +553,14 @@ public class TileMapGenBase : MonoBehaviour
         GameObject obj = null;
         if (!m_itemObjRef.TryGetValue(name, out obj))
         {
+#if UNITY_EDITOR
 #if TILEMAP_TEST
             obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_itemObjPath, name));
             m_itemObjRef.Add(name, obj);
             if (obj == null)
             {
                 obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TileMap/TileMapObj/Prefab/Error.prefab");
-                Debug.LogError("GetItemObj:null:"+name);
+                Debug.LogError("GetItemObj:null:" + name);
             }
 #else
             LoadManager.Instance.LoadAsset(m_itemObjPath, name, "prefab", typeof(GameObject), (data) =>
@@ -552,6 +568,7 @@ public class TileMapGenBase : MonoBehaviour
                 obj = data as GameObject;
                 m_itemObjRef.Add(name, obj);
             }, false);
+#endif
 #endif
         }
         return obj;
@@ -561,13 +578,14 @@ public class TileMapGenBase : MonoBehaviour
         GameObject obj = null;
         if (!m_alphaTexObjRef.TryGetValue(name, out obj))
         {
+#if UNITY_EDITOR
 #if TILEMAP_TEST
             obj = AssetDatabase.LoadAssetAtPath<GameObject>(string.Format("{0}/{1}.prefab", m_alphaTexObjPath, name));
             m_alphaTexObjRef.Add(name, obj);
             if (obj == null)
             {
                 obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TileMap/TileMapObj/Prefab/Error.prefab");
-                Debug.LogError("GetAlphaTexObj:null:"+name);
+                Debug.LogError("GetAlphaTexObj:null:" + name);
             }
 #else
             LoadManager.Instance.LoadAsset(m_alphaTexObjPath, name, "prefab", typeof(GameObject), (data) =>
@@ -576,10 +594,11 @@ public class TileMapGenBase : MonoBehaviour
                 m_alphaTexObjRef.Add(name, obj);
             }, false);
 #endif
+#endif
         }
         return obj;
     }
-    
+
     protected struct VisiableObj
     {
         public int terIndex;

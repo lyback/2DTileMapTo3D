@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 public class AlphaTexInfo : ScriptableObject
 {
     public List<int> posIndex;
-    public List<string> terrainAlphaList;
-    public Dictionary<int, string> terrainAlphaDic;
+    public List<AlphaTexInfo_S> terrainAlphaList;
+    public Dictionary<int, AlphaTexInfo_S> terrainAlphaDic;
     public AlphaTexInfo()
     {
         posIndex = new List<int>();
-        terrainAlphaList = new List<string>();
+        terrainAlphaList = new List<AlphaTexInfo_S>();
     }
     public void Init()
     {
@@ -17,11 +18,16 @@ public class AlphaTexInfo : ScriptableObject
             return;
         }
         int count = posIndex.Count;
-        terrainAlphaDic = new Dictionary<int, string>(count);
+        terrainAlphaDic = new Dictionary<int, AlphaTexInfo_S>(count);
         for (int i = 0; i < count; i++)
         {
             terrainAlphaDic.Add(posIndex[i], terrainAlphaList[i]);
         }
     }
-
+}
+[Serializable]
+public struct AlphaTexInfo_S
+{
+    public string objName;
+    public uint level;
 }

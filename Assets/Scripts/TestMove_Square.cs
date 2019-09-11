@@ -16,7 +16,11 @@ public class TestMove_Square : MonoBehaviour
 
     void Start()
     {
+#if UNITY_EDITOR
         var terrainInfo = AssetDatabase.LoadAssetAtPath<TerrainInfo>(string.Format("Assets/TileMap/TerrainInfo.asset"));
+#else
+        var terrainInfo = new TerrainInfo();
+#endif
         string tilemapInfoPath = "Assets/TileMap/MapInfo";
         string tilemapInfoName = "MapInfo_{0}_{1}";
         string itemInfoPath = "Assets/TileMap/ItemInfo";
@@ -27,7 +31,7 @@ public class TestMove_Square : MonoBehaviour
         string tilemapObjName = "Terrain@{0}";
         string itemObjPath = "Assets/TileMap/TileMapObj/Prefab/Item";
         string alphaTexObjPath = "Assets/TileMap/TileMapObj/Prefab/TerrainAlpha";
-        gen.Init(terrainInfo, size_W, size_H, item_W, item_H, size_W/2-1, size_H/2-1);
+        gen.Init(terrainInfo, size_W, size_H, item_W, item_H, size_W / 2 - 1, size_H / 2 - 1);
         gen.SetResPath(false, tilemapInfoPath, tilemapInfoName, itemInfoPath, itemInfoName, alphaTexInfoPath, alphaTexInfoName, tilemapObjPath, tilemapObjName, itemObjPath, alphaTexObjPath);
         // gen.Init(terrainInfo, terrainInfo.MapSize.x, terrainInfo.MapSize.y, terrainInfo.SpiltMapSize.x, terrainInfo.SpiltMapSize.y, size, Vector2.zero);
     }

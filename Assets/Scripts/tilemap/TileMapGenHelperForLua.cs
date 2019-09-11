@@ -23,6 +23,9 @@ public class TileMapGenHelperForLua
      string alphaTexObjPath){
         m_TileMapGen.SetResPath(fullPath, tileMapInfoPath, tileMapInfoName, itemInfoPath, itemInfoName, alphaTexPath, alphaTexName, terrainObjPath, terrainObjName, itemObjPath, alphaTexObjPath);
     }
+    public static void SetLevel(uint level){
+        m_TileMapGen.SetLevel(level);
+    }
     public static void MoveTo(float x, float z){
         m_TileMapGen.MoveTo(x, z);
     }

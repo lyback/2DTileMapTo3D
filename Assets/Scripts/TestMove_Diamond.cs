@@ -13,7 +13,11 @@ public class TestMove_Diamond : MonoBehaviour
     public int size_H = 100;
     void Start()
     {
+#if UNITY_EDITOR
         var terrainInfo = AssetDatabase.LoadAssetAtPath<TerrainInfo>(string.Format("Assets/TileMap/TerrainInfo.asset"));
+#else
+        var terrainInfo = new TerrainInfo();
+#endif
         string tilemapInfoPath = "Assets/TileMap/MapInfo";
         string tilemapInfoName = "MapInfo_{0}_{1}";
         string itemInfoPath = "Assets/TileMap/ItemInfo";
