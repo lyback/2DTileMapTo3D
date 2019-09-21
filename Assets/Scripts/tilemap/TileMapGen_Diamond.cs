@@ -97,10 +97,11 @@ public class TileMapGen_Diamond : TileMapGenBase
         z = temp;
         int id = x * 10000 + z;
         // Debug.Log("TileMap:HideItemAtPos:" + x + "," + z);
-        if (!m_hideItem.Contains(id))
-        {
-            m_hideItem.Add(id);
-        }
+        // if (!m_hideItem.Contains(id))
+        // {
+        //     m_hideItem.Add(id);
+        // }
+        m_hideItemList[x,z] = true;
     }
     public override void ShowItemAtPos(int x, int z)
     {
@@ -111,10 +112,11 @@ public class TileMapGen_Diamond : TileMapGenBase
         z = temp;
         // Debug.Log("TileMap:ShowItemAtPos:" + x + "," + z);
         int id = x * 10000 + z;
-        if (m_hideItem.Contains(id))
-        {
-            m_hideItem.Remove(id);
-        }
+        // if (m_hideItem.Contains(id))
+        // {
+        //     m_hideItem.Remove(id);
+        // }
+        m_hideItemList[x,z] = false;
     }
     // protected override void GetItemPosByIndex(int i, int j, out int x, out int z){
     //     int v_center_x = (i)/2 + 1;
